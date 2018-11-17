@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/modeSelectionFragment">
+
+    <activity
+        android:id="@+id/cardListView"
+        android:name="hci.phasedifference.recollect.CardListView"
+        android:label="activity_card_list_view"
+        tools:layout="@layout/activity_card_list_view" />
+    <fragment
+        android:id="@+id/learnMode2"
+        android:name="hci.phasedifference.recollect.LearnMode"
+        android:label="fragment_learn_mode"
+        tools:layout="@layout/fragment_learn_mode" />
+    <fragment
+        android:id="@+id/cardsListFragment"
+        android:name="hci.phasedifference.recollect.CardsListFragment"
+        android:label="fragment_cards_list"
+        tools:layout="@layout/fragment_cards_list" />
+    <fragment
+        android:id="@+id/modeSelectionFragment"
+        android:name="hci.phasedifference.recollect.ModeSelectionFragment"
+        android:label="fragment_mode_selection"
+        tools:layout="@layout/fragment_mode_selection">
+        <action
+            android:id="@+id/action_modeSelectionFragment_to_learnMode2"
+            app:destination="@id/learnMode2"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_modeSelectionFragment_to_cardsListFragment"
+            app:destination="@id/cardsListFragment" />
+        <action
+            android:id="@+id/action_modeSelectionFragment_to_glanceMode2"
+            app:destination="@id/glanceMode2" />
+    </fragment>
+    <fragment
+        android:id="@+id/glanceMode2"
+        android:name="hci.phasedifference.recollect.GlanceMode"
+        android:label="fragment_glance_mode"
+        tools:layout="@layout/fragment_glance_mode" />
+</navigation>
