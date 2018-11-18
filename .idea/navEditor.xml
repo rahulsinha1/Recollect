@@ -8,18 +8,6 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="cardListView">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-655" />
-                            <option name="y" value="-25" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="cardsListFragment">
                     <value>
                       <LayoutPositions>
@@ -56,6 +44,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="mainActivity">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-776" />
+                            <option name="y" value="-46" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="modeSelectionFragment">
                     <value>
                       <LayoutPositions>
@@ -67,12 +67,17 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_modeSelectionFragment_to_cardsListFragment">
+                            <entry key="actionGotoCardsList">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_modeSelectionFragment_to_learnMode2">
+                            <entry key="actionGotoGlanceMode">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_gotoLearnMode">
                               <value>
                                 <LayoutPositions />
                               </value>

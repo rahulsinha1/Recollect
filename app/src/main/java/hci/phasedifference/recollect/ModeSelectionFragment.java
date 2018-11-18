@@ -4,9 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.navigation.Navigation;
 
 
 /**
@@ -64,7 +66,33 @@ public class ModeSelectionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mode_selection, container, false);
+        View inflatedView = inflater.inflate(R.layout.fragment_mode_selection, container, false);
+        tracelog("setting onclick listeners");
+        inflatedView.findViewById(R.id.gotoEdit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tracelog("goto edit mode button");
+                Navigation.findNavController(view).navigate(R.id.action_gotoLearnMode);
+            }
+        });
+
+        inflatedView.findViewById(R.id.gotoLearnMode).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tracelog("goto learn mode button");
+                Navigation.findNavController(view).navigate(R.id.action_gotoLearnMode);
+            }
+        });
+
+        inflatedView.findViewById(R.id.gotoGlance).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tracelog("goto glance mode button");
+                Navigation.findNavController(view).navigate(R.id.actionGotoCardsList);
+            }
+        });
+
+        return inflatedView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +132,10 @@ public class ModeSelectionFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    public void tracelog(String msg) {
+        Log.v("Avinash", msg);
     }
 }

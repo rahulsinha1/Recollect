@@ -5,11 +5,6 @@
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/modeSelectionFragment">
 
-    <activity
-        android:id="@+id/cardListView"
-        android:name="hci.phasedifference.recollect.CardListView"
-        android:label="activity_card_list_view"
-        tools:layout="@layout/activity_card_list_view" />
     <fragment
         android:id="@+id/learnMode2"
         android:name="hci.phasedifference.recollect.LearnMode"
@@ -26,14 +21,14 @@
         android:label="fragment_mode_selection"
         tools:layout="@layout/fragment_mode_selection">
         <action
-            android:id="@+id/action_modeSelectionFragment_to_learnMode2"
+            android:id="@+id/action_gotoLearnMode"
             app:destination="@id/learnMode2"
             app:enterAnim="@anim/nav_default_enter_anim" />
         <action
-            android:id="@+id/action_modeSelectionFragment_to_cardsListFragment"
+            android:id="@+id/actionGotoCardsList"
             app:destination="@id/cardsListFragment" />
         <action
-            android:id="@+id/action_modeSelectionFragment_to_glanceMode2"
+            android:id="@+id/actionGotoGlanceMode"
             app:destination="@id/glanceMode2" />
     </fragment>
     <fragment
@@ -41,4 +36,9 @@
         android:name="hci.phasedifference.recollect.GlanceMode"
         android:label="fragment_glance_mode"
         tools:layout="@layout/fragment_glance_mode" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="hci.phasedifference.recollect.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>
