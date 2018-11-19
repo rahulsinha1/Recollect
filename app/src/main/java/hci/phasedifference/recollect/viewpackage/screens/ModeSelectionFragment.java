@@ -1,33 +1,26 @@
-package hci.phasedifference.recollect;
+package hci.phasedifference.recollect.viewpackage.screens;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import hci.phasedifference.recollect.datamodel.Card;
-import hci.phasedifference.recollect.datamodel.CardViewModel;
-import hci.phasedifference.recollect.datamodel.adapters.CardSetAdapter;
-
-import java.util.List;
+import androidx.navigation.Navigation;
+import hci.phasedifference.recollect.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LearnMode.OnFragmentInteractionListener} interface
+ * {@link ModeSelectionFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link LearnMode#newInstance} factory method to
+ * Use the {@link ModeSelectionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LearnMode extends Fragment {
+public class ModeSelectionFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,11 +29,10 @@ public class LearnMode extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private CardViewModel cardViewModel;
 
     private OnFragmentInteractionListener mListener;
 
-    public LearnMode() {
+    public ModeSelectionFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +42,11 @@ public class LearnMode extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment LearnMode.
+     * @return A new instance of fragment ModeSelectionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LearnMode newInstance(String param1, String param2) {
-        LearnMode fragment = new LearnMode();
+    public static ModeSelectionFragment newInstance(String param1, String param2) {
+        ModeSelectionFragment fragment = new ModeSelectionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,25 +66,34 @@ public class LearnMode extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View cardSetview = inflater.inflate(R.layout.fragment_learn_mode, container, false);
-
-        RecyclerView recyclerView = cardSetview.findViewById(R.id.cardSetList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setHasFixedSize(true);
-
-        final CardSetAdapter adapter = new CardSetAdapter();
-        recyclerView.setAdapter(adapter);
-
-        cardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
-        cardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
-
+        // Inflate the layout for this fragment
+        View inflatedView = inflater.inflate(R.layout.fragment_mode_selection, container, false);
+        tracelog("setting onclick listeners");
+        inflatedView.findViewById(R.id.gotoEdit).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable List<Card> cards) {
-                adapter.setCardSet(cards);
+            public void onClick(View view) {
+                tracelog("goto edit mode button");
+                Navigation.findNavController(view).navigate(R.id.action_gotoLearnMode);
             }
         });
 
-        return cardSetview;
+        inflatedView.findViewById(R.id.gotoLearnMode).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tracelog("goto learn mode button");
+                Navigation.findNavController(view).navigate(R.id.action_gotoLearnMode);
+            }
+        });
+
+        inflatedView.findViewById(R.id.gotoGlance).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tracelog("goto glance mode button");
+                Navigation.findNavController(view).navigate(R.id.actionGotoCardsList);
+            }
+        });
+
+        return inflatedView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -132,5 +133,10 @@ public class LearnMode extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    public void tracelog(String msg) {
+        Log.v("Avinash", msg);
     }
 }

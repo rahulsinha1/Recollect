@@ -1,4 +1,4 @@
-package hci.phasedifference.recollect;
+package hci.phasedifference.recollect.viewpackage.screens;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,17 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
+import hci.phasedifference.recollect.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link GlanceMode.OnFragmentInteractionListener} interface
+ * {@link CardsListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link GlanceMode#newInstance} factory method to
+ * Use the {@link CardsListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GlanceMode extends Fragment {
+public class CardsListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +30,7 @@ public class GlanceMode extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public GlanceMode() {
+    public CardsListFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +40,11 @@ public class GlanceMode extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment GlanceMode.
+     * @return A new instance of fragment CardsListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static GlanceMode newInstance(String param1, String param2) {
-        GlanceMode fragment = new GlanceMode();
+    public static CardsListFragment newInstance(String param1, String param2) {
+        CardsListFragment fragment = new CardsListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +65,7 @@ public class GlanceMode extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_glance_mode, container, false);
+        return inflater.inflate(R.layout.fragment_mode_selection, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,4 +106,5 @@ public class GlanceMode extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

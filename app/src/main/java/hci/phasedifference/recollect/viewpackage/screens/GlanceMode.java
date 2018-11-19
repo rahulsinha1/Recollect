@@ -1,25 +1,24 @@
-package hci.phasedifference.recollect;
+package hci.phasedifference.recollect.viewpackage.screens;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+import hci.phasedifference.recollect.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ModeSelectionFragment.OnFragmentInteractionListener} interface
+ * {@link GlanceMode.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ModeSelectionFragment#newInstance} factory method to
+ * Use the {@link GlanceMode#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ModeSelectionFragment extends Fragment {
+public class GlanceMode extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +30,7 @@ public class ModeSelectionFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ModeSelectionFragment() {
+    public GlanceMode() {
         // Required empty public constructor
     }
 
@@ -41,11 +40,11 @@ public class ModeSelectionFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ModeSelectionFragment.
+     * @return A new instance of fragment GlanceMode.
      */
     // TODO: Rename and change types and number of parameters
-    public static ModeSelectionFragment newInstance(String param1, String param2) {
-        ModeSelectionFragment fragment = new ModeSelectionFragment();
+    public static GlanceMode newInstance(String param1, String param2) {
+        GlanceMode fragment = new GlanceMode();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,33 +65,7 @@ public class ModeSelectionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View inflatedView = inflater.inflate(R.layout.fragment_mode_selection, container, false);
-        tracelog("setting onclick listeners");
-        inflatedView.findViewById(R.id.gotoEdit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tracelog("goto edit mode button");
-                Navigation.findNavController(view).navigate(R.id.action_gotoLearnMode);
-            }
-        });
-
-        inflatedView.findViewById(R.id.gotoLearnMode).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tracelog("goto learn mode button");
-                Navigation.findNavController(view).navigate(R.id.action_gotoLearnMode);
-            }
-        });
-
-        inflatedView.findViewById(R.id.gotoGlance).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tracelog("goto glance mode button");
-                Navigation.findNavController(view).navigate(R.id.actionGotoCardsList);
-            }
-        });
-
-        return inflatedView;
+        return inflater.inflate(R.layout.fragment_glance_mode, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -132,10 +105,5 @@ public class ModeSelectionFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-
-    public void tracelog(String msg) {
-        Log.v("Avinash", msg);
     }
 }

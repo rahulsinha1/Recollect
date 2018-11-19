@@ -1,4 +1,4 @@
-package hci.phasedifference.recollect
+package hci.phasedifference.recollect.viewpackage.screens
 
 import java.util.*
 

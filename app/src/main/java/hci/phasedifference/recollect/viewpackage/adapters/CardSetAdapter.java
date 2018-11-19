@@ -1,4 +1,4 @@
-package hci.phasedifference.recollect.datamodel.adapters;
+package hci.phasedifference.recollect.viewpackage.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
