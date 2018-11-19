@@ -28,8 +28,8 @@ public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetH
     @Override
     public void onBindViewHolder(@NonNull CardSetHolder holder, int position) {
         Card curCard = cardSet.get(position);
-        holder.tvtitle.setText(curCard.getWord());
-        holder.tvStarred.setText(curCard.getDefinition());
+        holder.tvtitle.setText(curCard.getTitles().get(1));
+        holder.tvStarred.setText(curCard.getTitles().get(0));
     }
 
     @Override
