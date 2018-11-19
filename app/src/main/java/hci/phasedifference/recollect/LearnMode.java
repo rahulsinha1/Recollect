@@ -6,7 +6,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import hci.phasedifference.recollect.datamodel.Card;
+import hci.phasedifference.recollect.datamodel.CardViewModel;
+import hci.phasedifference.recollect.datamodel.adapters.CardSetAdapter;
+
+import java.util.List;
 
 
 /**
@@ -26,6 +36,7 @@ public class LearnMode extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private CardViewModel cardViewModel;
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,8 +74,25 @@ public class LearnMode extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_learn_mode, container, false);
+        View cardSetview = inflater.inflate(R.layout.fragment_learn_mode, container, false);
+
+        RecyclerView recyclerView = cardSetview.findViewById(R.id.cardSetList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setHasFixedSize(true);
+
+        final CardSetAdapter adapter = new CardSetAdapter();
+        recyclerView.setAdapter(adapter);
+
+        cardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
+        cardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
+
+            @Override
+            public void onChanged(@Nullable List<Card> cards) {
+                adapter.setCardSet(cards);
+            }
+        });
+
+        return cardSetview;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
