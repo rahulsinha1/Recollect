@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import hci.phasedifference.recollect.R;
-import hci.phasedifference.recollect.datamodel.Card;
+import hci.phasedifference.recollect.datamodel.AvailableCardSets;
 import hci.phasedifference.recollect.datamodel.CardViewModel;
 import hci.phasedifference.recollect.viewpackage.adapters.CardSetAdapter;
 
@@ -85,11 +85,11 @@ public class LearnMode extends Fragment {
         recyclerView.setAdapter(adapter);
 
         cardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
-        cardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
+        cardViewModel.getAllCards().observe(this, new Observer<List<AvailableCardSets>>() {
 
             @Override
-            public void onChanged(@Nullable List<Card> cards) {
-                adapter.setCardSet(cards);
+            public void onChanged(@Nullable List<AvailableCardSets> availableCardSets) {
+                adapter.setAvailableCardSetsSet(availableCardSets);
             }
         });
 

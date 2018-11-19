@@ -8,7 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Card.class}, version = 1)
+@Database(entities = {AvailableCardSets.class}, version = 1)
 public abstract class CardDataBase extends RoomDatabase {
 
     private static CardDataBase instance;
@@ -41,9 +41,9 @@ public abstract class CardDataBase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            dao.insert(new Card("Word1", "Definition1", 0, false));
-            dao.insert(new Card("Word2", "Definition2", 0, false));
-            dao.insert(new Card("Word3", "Definition3", 0, false));
+            dao.insert(new AvailableCardSets("Word1", "Definition1", 0, false));
+            dao.insert(new AvailableCardSets("Word2", "Definition2", 0, false));
+            dao.insert(new AvailableCardSets("Word3", "Definition3", 0, false));
 
             return null;
         }

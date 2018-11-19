@@ -9,7 +9,7 @@ import java.util.List;
 public class CardRepository {
 
     private CardDAO cardDao;
-    private LiveData<List<Card>> allCards;
+    private LiveData<List<AvailableCardSets>> allCards;
 
     public CardRepository(Application app) {
 
@@ -20,18 +20,18 @@ public class CardRepository {
     }
 
 
-    void insert(Card card) {
-        new InsertCardAsyncTask(cardDao).execute(card);
+    void insert(AvailableCardSets availableCardSets) {
+        new InsertCardAsyncTask(cardDao).execute(availableCardSets);
 
     }
 
-    void update(Card card) {
-        new UpdateCardAsyncTask(cardDao).execute(card);
+    void update(AvailableCardSets availableCardSets) {
+        new UpdateCardAsyncTask(cardDao).execute(availableCardSets);
 
     }
 
-    void delete(Card card) {
-        new DeleteCardAsyncTask(cardDao).execute(card);
+    void delete(AvailableCardSets availableCardSets) {
+        new DeleteCardAsyncTask(cardDao).execute(availableCardSets);
 
     }
 
@@ -39,12 +39,12 @@ public class CardRepository {
         new DeleteAllAsyncTask(cardDao).execute();
     }
 
-    LiveData<List<Card>> getAllCards() {
+    LiveData<List<AvailableCardSets>> getAllCards() {
         return allCards;
     }
 
 
-    private static class InsertCardAsyncTask extends AsyncTask<Card, Void, Void> {
+    private static class InsertCardAsyncTask extends AsyncTask<AvailableCardSets, Void, Void> {
 
         private CardDAO cardDao;
 
@@ -53,13 +53,13 @@ public class CardRepository {
         }
 
         @Override
-        protected Void doInBackground(Card... cards) {
-            cardDao.insert(cards[0]);
+        protected Void doInBackground(AvailableCardSets... availableCardSets) {
+            cardDao.insert(availableCardSets[0]);
             return null;
         }
     }
 
-    private static class UpdateCardAsyncTask extends AsyncTask<Card, Void, Void> {
+    private static class UpdateCardAsyncTask extends AsyncTask<AvailableCardSets, Void, Void> {
 
         private CardDAO cardDao;
 
@@ -68,13 +68,13 @@ public class CardRepository {
         }
 
         @Override
-        protected Void doInBackground(Card... cards) {
-            cardDao.insert(cards[0]);
+        protected Void doInBackground(AvailableCardSets... availableCardSets) {
+            cardDao.insert(availableCardSets[0]);
             return null;
         }
     }
 
-    private static class DeleteCardAsyncTask extends AsyncTask<Card, Void, Void> {
+    private static class DeleteCardAsyncTask extends AsyncTask<AvailableCardSets, Void, Void> {
 
         private CardDAO cardDao;
 
@@ -83,8 +83,8 @@ public class CardRepository {
         }
 
         @Override
-        protected Void doInBackground(Card... cards) {
-            cardDao.insert(cards[0]);
+        protected Void doInBackground(AvailableCardSets... availableCardSets) {
+            cardDao.insert(availableCardSets[0]);
             return null;
         }
     }

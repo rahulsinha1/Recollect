@@ -7,14 +7,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import hci.phasedifference.recollect.R;
-import hci.phasedifference.recollect.datamodel.Card;
+import hci.phasedifference.recollect.datamodel.AvailableCardSets;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetHolder> {
 
-    private List<Card> cardSet = new ArrayList<>();
+    private List<AvailableCardSets> availableCardSetsSet = new ArrayList<>();
 
     @NonNull
     @Override
@@ -27,18 +27,18 @@ public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetH
 
     @Override
     public void onBindViewHolder(@NonNull CardSetHolder holder, int position) {
-        Card curCard = cardSet.get(position);
-        holder.tvtitle.setText(curCard.getTitles().get(1));
-        holder.tvStarred.setText(curCard.getTitles().get(0));
+        AvailableCardSets curAvailableCardSets = availableCardSetsSet.get(position);
+        holder.tvtitle.setText(curAvailableCardSets.getTitles().get(1));
+        holder.tvStarred.setText(curAvailableCardSets.getTitles().get(0));
     }
 
     @Override
     public int getItemCount() {
-        return cardSet.size();
+        return availableCardSetsSet.size();
     }
 
-    public void setCardSet(List list) {
-        cardSet = list;
+    public void setAvailableCardSetsSet(List list) {
+        availableCardSetsSet = list;
         notifyDataSetChanged();
     }
 

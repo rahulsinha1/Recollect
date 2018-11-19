@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Card {
+public class AvailableCardSets {
     private final String definition;
     private final String word;
     private int level;
@@ -18,7 +18,7 @@ public class Card {
     @TypeConverters(TypeConverterCardSet.class)
     private List<String> titles;
 
-    public Card(String word, String definition, int level, boolean starred) {
+    public AvailableCardSets(String word, String definition, int level, boolean starred) {
         this.level = level;
         this.definition = definition;
         this.word = word;

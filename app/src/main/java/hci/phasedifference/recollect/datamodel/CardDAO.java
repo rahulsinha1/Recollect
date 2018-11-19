@@ -9,17 +9,17 @@ import java.util.List;
 public interface CardDAO {
 
     @Insert
-    void insert(Card card);
+    void insert(AvailableCardSets availableCardSets);
 
     @Update
-    void update(Card card);
+    void update(AvailableCardSets availableCardSets);
 
     @Delete
-    void delete(Card card);
+    void delete(AvailableCardSets availableCardSets);
 
-    @Query("DELETE FROM Card")
+    @Query("DELETE FROM AvailableCardSets")
     void deleteAll();
 
-    @Query("SELECT * FROM Card")
-    LiveData<List<Card>> getAllCards();
+    @Query("SELECT * FROM AvailableCardSets")
+    LiveData<List<AvailableCardSets>> getAllCards();
 }
