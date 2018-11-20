@@ -15,6 +15,14 @@ public class AvailableCardSets {
     private int level;
     private boolean starred;
 
+    public List<String> getTitles() {
+        return titles;
+    }
+
+    public void setTitles(List<String> titles) {
+        this.titles = titles;
+    }
+
     @TypeConverters(TypeConverterCardSet.class)
     private List<String> titles;
 
@@ -24,17 +32,12 @@ public class AvailableCardSets {
         this.word = word;
         this.starred = starred;
         titles = new ArrayList<>();
-        titles.add(word);
-        titles.add(definition);
     }
 
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    public List<String> getTitles() {
-        return titles;
-    }
 
     public int getLevel() {
         return level;
@@ -68,8 +71,5 @@ public class AvailableCardSets {
         this.id = id;
     }
 
-    public void setTitles(List<String> titles) {
-        this.titles = titles;
-    }
 
 }
