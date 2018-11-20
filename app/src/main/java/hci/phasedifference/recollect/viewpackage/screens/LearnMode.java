@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import hci.phasedifference.recollect.R;
 import hci.phasedifference.recollect.datamodel.AvailableCardSets;
@@ -78,7 +78,7 @@ public class LearnMode extends Fragment {
         View cardSetview = inflater.inflate(R.layout.fragment_learn_mode, container, false);
 
         RecyclerView recyclerView = cardSetview.findViewById(R.id.cardSetList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
 
         final CardSetAdapter adapter = new CardSetAdapter();

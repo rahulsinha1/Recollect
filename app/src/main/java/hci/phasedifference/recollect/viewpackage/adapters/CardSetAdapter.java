@@ -29,7 +29,7 @@ public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetH
     public void onBindViewHolder(@NonNull CardSetHolder holder, int position) {
         AvailableCardSets curAvailableCardSets = availableCardSetsSet.get(position);
         holder.tvtitle.setText(curAvailableCardSets.getTitles().get(1));
-        holder.tvStarred.setText(curAvailableCardSets.getTitles().get(0));
+        holder.tvComplete.setText(curAvailableCardSets.getTitles().get(0));
     }
 
     @Override
@@ -44,12 +44,12 @@ public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetH
 
     public class CardSetHolder extends RecyclerView.ViewHolder {
         private TextView tvtitle;
-        private TextView tvStarred;
+        private TextView tvComplete;
 
         public CardSetHolder(View itemView) {
             super(itemView);
             tvtitle = itemView.findViewById(R.id.title);
-            tvStarred = itemView.findViewById(R.id.starredOrNot);
+            tvComplete = itemView.findViewById(R.id.description);
         }
     }
 
