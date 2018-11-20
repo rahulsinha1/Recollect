@@ -1,5 +1,9 @@
 package hci.phasedifference.recollect.datamodel.datarepresentaion;
 
+import android.os.Build;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +16,16 @@ public class CardSetImpl implements CardSetInterface {
 
     public CardSetImpl(String title) {
         this.title = title;
+        cards = new ArrayList<>();
+    }
+
+    public CardSetImpl(CardSetImpl other) {
+        title = other.title;
+        cards = getListCopy(other.cards);
+    }
+
+    public CardSetImpl() {
+        title = "";
         cards = new ArrayList<>();
     }
 
@@ -73,11 +87,7 @@ public class CardSetImpl implements CardSetInterface {
 
     @Override
     public List<Card> getCards() {
-        List listToReturn = new ArrayList<>();
-        for (Card c : cards) {
-            listToReturn.add(new Card(c));
-        }
-        return listToReturn;
+        return getListCopy(cards);
     }
 
     @Override
@@ -85,6 +95,13 @@ public class CardSetImpl implements CardSetInterface {
         return title;
     }
 
+    private List<Card> getListCopy(List<Card> orig) {
+        List listToReturn = new ArrayList<>();
+        for (Card c : orig) {
+            listToReturn.add(new Card(c));
+        }
+        return listToReturn;
+    }
 
     private boolean addCardHelper(int index, String word, String definition,
                                   LeitnerLevels level, boolean starred) {
@@ -113,5 +130,12 @@ public class CardSetImpl implements CardSetInterface {
         return LeitnerLevels.NEW_WORD;
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @NonNull
+    @Override
+    public String toString() {
+        return cards.stream()
+                .map(b -> b.toString())
+                .reduce("", (a, b) -> a + b);
+    }
 }

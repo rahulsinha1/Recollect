@@ -7,6 +7,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import hci.phasedifference.recollect.datamodel.datarepresentaion.CardSetImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Database(entities = {AvailableCardSets.class}, version = 1)
 public abstract class CardDataBase extends RoomDatabase {
@@ -16,7 +20,7 @@ public abstract class CardDataBase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            new CreateDBAsyncTast(instance).execute();
+            new CreateDBAsyncTask(instance).execute();
         }
     };
 
@@ -31,19 +35,41 @@ public abstract class CardDataBase extends RoomDatabase {
 
     public abstract CardDAO cardDao();
 
-    private static class CreateDBAsyncTast extends AsyncTask<Void, Void, Void> {
+    private static class CreateDBAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private CardDAO dao;
 
-        private CreateDBAsyncTast(CardDataBase db) {
+        private CreateDBAsyncTask(CardDataBase db) {
             dao = db.cardDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            dao.insert(new AvailableCardSets("Word1", "Definition1", 0, false));
-            dao.insert(new AvailableCardSets("Word2", "Definition2", 0, false));
-            dao.insert(new AvailableCardSets("Word3", "Definition3", 0, false));
+            //todo: remove this once add set is implemented
+            CardSetImpl set = new CardSetImpl("German");
+            set.addCard("Der Tisch", "The table");
+            set.addCard("Die Tasche", "The bag");
+            set.addCard("Danke", "Thank you");
+
+
+            CardSetImpl set1 = new CardSetImpl("French");
+            set.addCard("Merci", "The table");
+            set.addCard("Oui", "Yes");
+            set.addCard("Bonjour", "Hello");
+
+
+            CardSetImpl set2 = new CardSetImpl("Spanish");
+            set.addCard("Gracias", "Thank you");
+            set.addCard("Si", "Yes");
+            set.addCard("Hola", "Hello");
+
+            List<CardSetImpl> list = new ArrayList<>();
+            list.add(set);
+            list.add(set1);
+            list.add(set2);
+
+            System.out.println("avinash inserting " + list);
+            dao.insert(new AvailableCardSets(list));
 
             return null;
         }

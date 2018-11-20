@@ -1,5 +1,7 @@
 package hci.phasedifference.recollect.datamodel.datarepresentaion;
 
+import androidx.annotation.NonNull;
+
 public class Card {
 
     private final String definition;
@@ -60,6 +62,12 @@ public class Card {
     @Override
     public int hashCode() {
         return (definition + word).hashCode();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Word: " + word + " defn: " + definition;
     }
 }
 

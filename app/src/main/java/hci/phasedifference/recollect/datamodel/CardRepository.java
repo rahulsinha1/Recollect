@@ -4,19 +4,16 @@ import android.app.Application;
 import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
-import java.util.List;
-
 public class CardRepository {
 
     private CardDAO cardDao;
-    private LiveData<List<AvailableCardSets>> allCards;
+    private LiveData<AvailableCardSets> allCards;
 
     public CardRepository(Application app) {
 
         CardDataBase carddb = CardDataBase.getInstance(app.getApplicationContext());
         cardDao = carddb.cardDao();
         allCards = cardDao.getAllCards();
-
     }
 
 
@@ -39,7 +36,7 @@ public class CardRepository {
         new DeleteAllAsyncTask(cardDao).execute();
     }
 
-    LiveData<List<AvailableCardSets>> getAllCards() {
+    LiveData<AvailableCardSets> getAllCards() {
         return allCards;
     }
 
@@ -69,7 +66,7 @@ public class CardRepository {
 
         @Override
         protected Void doInBackground(AvailableCardSets... availableCardSets) {
-            cardDao.insert(availableCardSets[0]);
+            cardDao.update(availableCardSets[0]);
             return null;
         }
     }
@@ -84,7 +81,7 @@ public class CardRepository {
 
         @Override
         protected Void doInBackground(AvailableCardSets... availableCardSets) {
-            cardDao.insert(availableCardSets[0]);
+            cardDao.delete(availableCardSets[0]);
             return null;
         }
     }

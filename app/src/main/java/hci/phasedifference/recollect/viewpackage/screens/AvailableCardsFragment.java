@@ -17,8 +17,6 @@ import hci.phasedifference.recollect.datamodel.AvailableCardSets;
 import hci.phasedifference.recollect.datamodel.CardViewModel;
 import hci.phasedifference.recollect.viewpackage.adapters.CardSetAdapter;
 
-import java.util.List;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,11 +83,11 @@ public class AvailableCardsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         cardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
-        cardViewModel.getAllCards().observe(this, new Observer<List<AvailableCardSets>>() {
+        cardViewModel.getAllCards().observe(this, new Observer<AvailableCardSets>() {
 
             @Override
-            public void onChanged(@Nullable List<AvailableCardSets> availableCardSets) {
-                adapter.setAvailableCardSetsSet(availableCardSets);
+            public void onChanged(@Nullable AvailableCardSets availableCardSets) {
+                adapter.setAvailableCardSets(availableCardSets);
             }
         });
 

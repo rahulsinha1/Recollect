@@ -8,13 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import hci.phasedifference.recollect.R;
 import hci.phasedifference.recollect.datamodel.AvailableCardSets;
-
-import java.util.ArrayList;
-import java.util.List;
+import hci.phasedifference.recollect.datamodel.datarepresentaion.CardSetInterface;
 
 public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetHolder> {
 
-    private List<AvailableCardSets> availableCardSetsSet = new ArrayList<>();
+    private AvailableCardSets availableCardSets = new AvailableCardSets();
 
     @NonNull
     @Override
@@ -27,18 +25,21 @@ public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetH
 
     @Override
     public void onBindViewHolder(@NonNull CardSetHolder holder, int position) {
-        AvailableCardSets curAvailableCardSets = availableCardSetsSet.get(position);
-        holder.tvtitle.setText(curAvailableCardSets.getTitles().get(1));
-        holder.tvComplete.setText(curAvailableCardSets.getTitles().get(0));
+        CardSetInterface set = availableCardSets.getAvailableCardSets().get(position);
+        holder.tvtitle.setText(set.getCardsetTitle());
+//        holder.tvComplete.setText(curAvailableCardSets.getTitles().get(0));
     }
 
     @Override
     public int getItemCount() {
-        return availableCardSetsSet.size();
+        if (availableCardSets != null) {
+            return availableCardSets.getAvailableCardSets().size();
+        }
+        return 0;
     }
 
-    public void setAvailableCardSetsSet(List list) {
-        availableCardSetsSet = list;
+    public void setAvailableCardSets(AvailableCardSets sets) {
+        availableCardSets = sets;
         notifyDataSetChanged();
     }
 

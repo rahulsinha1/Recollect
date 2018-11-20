@@ -3,8 +3,6 @@ package hci.phasedifference.recollect.datamodel;
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
 
-import java.util.List;
-
 @Dao
 public interface CardDAO {
 
@@ -21,5 +19,5 @@ public interface CardDAO {
     void deleteAll();
 
     @Query("SELECT * FROM AvailableCardSets")
-    LiveData<List<AvailableCardSets>> getAllCards();
+    LiveData<AvailableCardSets> getAllCards();
 }

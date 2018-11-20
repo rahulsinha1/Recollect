@@ -5,12 +5,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import java.util.List;
-
 public class CardViewModel extends AndroidViewModel {
 
     private CardRepository repo;
-    private LiveData<List<AvailableCardSets>> allCards;
+    private LiveData<AvailableCardSets> allCards;
 
     public CardViewModel(@NonNull Application application) {
         super(application);
@@ -34,7 +32,7 @@ public class CardViewModel extends AndroidViewModel {
         repo.deleteAll();
     }
 
-    public LiveData<List<AvailableCardSets>> getAllCards() {
+    public LiveData<AvailableCardSets> getAllCards() {
         return allCards;
     }
 }
