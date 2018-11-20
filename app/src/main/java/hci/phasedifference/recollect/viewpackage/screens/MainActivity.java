@@ -7,7 +7,7 @@ import hci.phasedifference.recollect.R;
 
 public class MainActivity extends AppCompatActivity
         implements GlanceMode.OnFragmentInteractionListener,
-        LearnMode.OnFragmentInteractionListener,
+        AvailableCardsFragment.OnFragmentInteractionListener,
         ModeSelectionFragment.OnFragmentInteractionListener {
 
 

@@ -8,6 +8,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="availableCardsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-668" />
+                            <option name="y" value="-50" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="cardsListFragment">
                     <value>
                       <LayoutPositions>
@@ -49,8 +61,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-776" />
-                            <option name="y" value="-46" />
+                            <option name="x" value="-821" />
+                            <option name="y" value="-312" />
                           </Point>
                         </option>
                       </LayoutPositions>
