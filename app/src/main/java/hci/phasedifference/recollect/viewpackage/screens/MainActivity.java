@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import hci.phasedifference.recollect.R;
 
 public class MainActivity extends AppCompatActivity
-        implements GlanceMode.OnFragmentInteractionListener,
-        AvailableCardsFragment.OnFragmentInteractionListener,
-        ModeSelectionFragment.OnFragmentInteractionListener {
+        implements AvailableCardsFragment.OnFragmentInteractionListener {
 
 
     @Override
