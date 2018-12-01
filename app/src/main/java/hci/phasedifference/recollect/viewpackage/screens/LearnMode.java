@@ -12,6 +12,7 @@ import android.view.animation.DecelerateInterpolator;
 import androidx.fragment.app.Fragment;
 import com.yuyakaido.android.cardstackview.*;
 import hci.phasedifference.recollect.R;
+import hci.phasedifference.recollect.viewpackage.adapters.CardStackAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

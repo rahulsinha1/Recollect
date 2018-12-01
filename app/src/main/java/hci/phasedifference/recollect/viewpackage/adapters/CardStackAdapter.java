@@ -1,4 +1,4 @@
-package hci.phasedifference.recollect.viewpackage.screens;
+package hci.phasedifference.recollect.viewpackage.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
 import hci.phasedifference.recollect.R;
+import hci.phasedifference.recollect.viewpackage.screens.Spot;
 
 import java.util.List;
 
@@ -33,9 +33,6 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Spot spot = spots.get(position);
         holder.name.setText(spot.name);
-        Glide.with(holder.image)
-                .load(spot.url)
-                .into(holder.image);
     }
 
     @Override

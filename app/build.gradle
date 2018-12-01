@@ -65,7 +65,6 @@ dependencies {
     // this library depends on the Kotlin standard library
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
     androidTestImplementation "android.arch.navigation:navigation-testing:$nav_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
