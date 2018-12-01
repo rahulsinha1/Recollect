@@ -53,15 +53,15 @@ public abstract class CardDataBase extends RoomDatabase {
 
 
             CardSetImpl set1 = new CardSetImpl("French");
-            set.addCard("Merci", "The table");
-            set.addCard("Oui", "Yes");
-            set.addCard("Bonjour", "Hello");
+            set1.addCard("Merci", "The table");
+            set1.addCard("Oui", "Yes");
+            set1.addCard("Bonjour", "Hello");
 
 
             CardSetImpl set2 = new CardSetImpl("Spanish");
-            set.addCard("Gracias", "Thank you");
-            set.addCard("Si", "Yes");
-            set.addCard("Hola", "Hello");
+            set2.addCard("Gracias", "Thank you");
+            set2.addCard("Si", "Yes");
+            set2.addCard("Hola", "Hello");
 
             List<CardSetImpl> list = new ArrayList<>();
             list.add(set);

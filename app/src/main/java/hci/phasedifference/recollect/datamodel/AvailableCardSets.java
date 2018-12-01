@@ -30,7 +30,7 @@ public class AvailableCardSets {
 
     public AvailableCardSets(List<CardSetImpl> localsets) {
         System.out.println("Avinash" + localsets);
-        this.localsets = localsets;
+        this.localsets = getListCopy(localsets);
     }
 
     public List<CardSetImpl> getLocalsets() {

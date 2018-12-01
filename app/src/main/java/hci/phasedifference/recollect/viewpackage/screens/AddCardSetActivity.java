@@ -5,25 +5,18 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import hci.phasedifference.recollect.R;
 
-public class MainActivity extends AppCompatActivity
-        implements AvailableCardsFragment.OnFragmentInteractionListener,
-        AddCardFragment.OnFragmentInteractionListener,
-        LearnMode.OnFragmentInteractionListener,
-        ViewMode.OnFragmentInteractionListener {
-
+public class AddCardSetActivity extends AppCompatActivity
+        implements AddCardFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_add_card_set);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
     }
-
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 }

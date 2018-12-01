@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class ActiveDataHandler {
 
     private static ActiveDataHandler instance;
+
     CardSetImpl curCardSet;
     Stack<Card> displayCardStack;
 
@@ -80,5 +81,6 @@ public class ActiveDataHandler {
         return displayCardStack;
 
     }
+
 
 }

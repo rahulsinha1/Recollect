@@ -14,5 +14,30 @@
         android:id="@+id/availableCardsFragment"
         android:name="hci.phasedifference.recollect.viewpackage.screens.AvailableCardsFragment"
         android:label="available_cardlist_fragment"
-        tools:layout="@layout/available_cardlist_fragment"></fragment>
+        tools:layout="@layout/available_cardlist_fragment">
+        <action
+            android:id="@+id/actionGotoLearnMode"
+            app:destination="@id/learnMode" />
+        <action
+            android:id="@+id/actionGotoViewMode"
+            app:destination="@id/viewMode" />
+        <action
+            android:id="@+id/actionGotoAddCard"
+            app:destination="@id/addCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/learnMode"
+        android:name="hci.phasedifference.recollect.viewpackage.screens.LearnMode"
+        android:label="fragment_learn_mode"
+        tools:layout="@layout/fragment_learn_mode" />
+    <fragment
+        android:id="@+id/viewMode"
+        android:name="hci.phasedifference.recollect.viewpackage.screens.ViewMode"
+        android:label="fragment_view_mode"
+        tools:layout="@layout/fragment_view_mode" />
+    <fragment
+        android:id="@+id/addCardFragment"
+        android:name="hci.phasedifference.recollect.viewpackage.screens.AddCardFragment"
+        android:label="fragment_add_card"
+        tools:layout="@layout/fragment_add_card"></fragment>
 </navigation>

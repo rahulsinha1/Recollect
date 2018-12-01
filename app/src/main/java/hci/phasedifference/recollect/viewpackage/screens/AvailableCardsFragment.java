@@ -2,20 +2,26 @@ package hci.phasedifference.recollect.viewpackage.screens;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import hci.phasedifference.recollect.R;
+import hci.phasedifference.recollect.datamodel.ActiveDataHandler;
 import hci.phasedifference.recollect.datamodel.AvailableCardSets;
 import hci.phasedifference.recollect.datamodel.CardViewModel;
 import hci.phasedifference.recollect.viewpackage.adapters.CardSetAdapter;
+import hci.phasedifference.recollect.viewpackage.adapters.CardSetItemOnClickListener;
 
 
 /**
@@ -26,7 +32,7 @@ import hci.phasedifference.recollect.viewpackage.adapters.CardSetAdapter;
  * Use the {@link AvailableCardsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AvailableCardsFragment extends Fragment {
+public class AvailableCardsFragment extends Fragment implements CardSetItemOnClickListener, View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,6 +42,8 @@ public class AvailableCardsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private CardViewModel cardViewModel;
+    private AvailableCardSets availableCardSets;
+    private ActiveDataHandler activeDataHandler;
 
     private OnFragmentInteractionListener mListener;
 
@@ -68,6 +76,7 @@ public class AvailableCardsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        activeDataHandler = ActiveDataHandler.getInstance();
     }
 
     @Override
@@ -81,13 +90,18 @@ public class AvailableCardsFragment extends Fragment {
 
         final CardSetAdapter adapter = new CardSetAdapter();
         recyclerView.setAdapter(adapter);
+        adapter.setClickListener(this);
 
-        cardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
+        Button button = cardSetview.findViewById(R.id.addCardSet);
+        button.setOnClickListener(this);
+
+        cardViewModel = ViewModelProviders.of(getActivity()).get(CardViewModel.class);
         cardViewModel.getAllCards().observe(this, new Observer<AvailableCardSets>() {
 
             @Override
             public void onChanged(@Nullable AvailableCardSets availableCardSets) {
                 adapter.setAvailableCardSets(availableCardSets);
+                AvailableCardsFragment.this.availableCardSets = availableCardSets;
             }
         });
 
@@ -116,6 +130,34 @@ public class AvailableCardsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onClick(View view, int position) {
+        activeDataHandler.activateCardSet(
+                availableCardSets.getLocalsets().get(position));
+        //todo
+        switch (view.getId()) {
+            case R.id.buttonLearnMode:
+                Navigation.findNavController(view).navigate(R.id.actionGotoLearnMode);
+                break;
+            case R.id.buttonViewMode:
+                Navigation.findNavController(view).navigate(R.id.actionGotoViewMode);
+                break;
+            case R.id.addCardSet:
+                Navigation.findNavController(view).navigate(R.id.actionGotoAddCard);
+                break;
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.addCardSet:
+                Navigation.findNavController(view).navigate(R.id.actionGotoAddCard);
+                break;
+        }
     }
 
     /**

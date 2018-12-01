@@ -3,6 +3,7 @@ package hci.phasedifference.recollect.viewpackage.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,8 @@ import hci.phasedifference.recollect.datamodel.datarepresentaion.CardSetInterfac
 public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetHolder> {
 
     private AvailableCardSets availableCardSets = new AvailableCardSets();
+    private CardSetItemOnClickListener clickListener;
+
 
     @NonNull
     @Override
@@ -43,7 +46,11 @@ public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetH
         notifyDataSetChanged();
     }
 
-    public class CardSetHolder extends RecyclerView.ViewHolder {
+    public void setClickListener(CardSetItemOnClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    public class CardSetHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvtitle;
         private TextView tvComplete;
 
@@ -51,6 +58,15 @@ public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetH
             super(itemView);
             tvtitle = itemView.findViewById(R.id.title);
             tvComplete = itemView.findViewById(R.id.description);
+            Button button = itemView.findViewById(R.id.buttonLearnMode);
+            button.setOnClickListener(this);
+            button = itemView.findViewById(R.id.buttonViewMode);
+            button.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onClick(view, getAdapterPosition());
         }
     }
 
