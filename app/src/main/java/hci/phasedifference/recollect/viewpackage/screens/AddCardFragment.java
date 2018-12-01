@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import hci.phasedifference.recollect.R;
+import hci.phasedifference.recollect.datamodel.ActiveDataHandler;
+import hci.phasedifference.recollect.datamodel.datarepresentaion.CardSetImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -163,6 +165,13 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
             break;
             case R.id.buttonSaveWords:
                 //todo : handle data base addition here.
+                if (word2def.size() != 0) {
+                    CardSetImpl c = new CardSetImpl(title);
+                    for (Map.Entry<String, String> e : word2def.entrySet()) {
+                        c.addCard(e.getKey(), e.getValue());
+                    }
+                    ActiveDataHandler.getInstance().addCardSet(c);
+                }
                 break;
             case R.id.buttonCancelCardAddition:
                 showToastMessage("LongPress to Cancel addition of cardset");

@@ -4,6 +4,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import hci.phasedifference.recollect.datamodel.datarepresentaion.CardSetImpl;
 
 public class CardViewModel extends AndroidViewModel {
 
@@ -14,6 +15,11 @@ public class CardViewModel extends AndroidViewModel {
         super(application);
         repo = new CardRepository(application);
         allCards = repo.getAllCards();
+    }
+
+    public void addAcardSet(CardSetImpl c) {
+        allCards.getValue().addCardSet(c);
+        update(allCards.getValue());
     }
 
     public void insert(AvailableCardSets availableCardSets) {

@@ -105,6 +105,8 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
             }
         });
 
+        ActiveDataHandler.getInstance().setViewModel(cardViewModel);
+
         return cardSetview;
     }
 

@@ -11,6 +11,10 @@ import java.util.Set;
 
 public class CardSetImpl implements CardSetInterface {
 
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
     private final String title;
     private List<Card> cards;
 

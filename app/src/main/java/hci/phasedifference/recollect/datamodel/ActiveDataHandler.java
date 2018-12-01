@@ -18,6 +18,13 @@ public class ActiveDataHandler {
     CardSetImpl curCardSet;
     Stack<Card> displayCardStack;
 
+
+    private CardViewModel viewModel;
+
+    public void setViewModel(CardViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     private ActiveDataHandler() {
     }
 
@@ -80,6 +87,10 @@ public class ActiveDataHandler {
         }
         return displayCardStack;
 
+    }
+
+    public void addCardSet(CardSetImpl c) {
+        viewModel.addAcardSet(c);
     }
 
 
