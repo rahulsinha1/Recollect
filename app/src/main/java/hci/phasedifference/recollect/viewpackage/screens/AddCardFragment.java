@@ -27,11 +27,14 @@ import java.util.Map;
  * Use the {@link AddCardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddCardFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
+public class AddCardFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener, ConfirmDialogListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private final int CONFIRM_BEFORE_CANCEL = 1;
+    private final String CANCEL_DIALOG_STRING = "Cancelling will not save the Cards Entered,Do you want to continue?";
 
     private EditText etTitle;
     private EditText etWord;
@@ -41,6 +44,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     private Button buttonSave;
     private Button buttonCancel;
     private boolean nameEntered;
+    private DialogHandler confirmationDialog;
 
     private String title;
     private Map<String, String> word2def;
@@ -50,6 +54,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
 
     public AddCardFragment() {
         // Required empty public constructor
@@ -102,6 +107,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
         buttonSave = view.findViewById(R.id.buttonSaveWords);
         buttonCancel = view.findViewById(R.id.buttonCancelCardAddition);
 
+        confirmationDialog = new DialogHandler(getContext(), this);
 
         buttonSave.setOnClickListener(this);
         buttonAddMore.setOnClickListener(this);
@@ -182,14 +188,26 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
                         c.addCard(e.getKey(), e.getValue());
                     }
                     ActiveDataHandler.getInstance().addCardSet(c);
+                    getActivity().onBackPressed();
+                } else {
+                    showToastMessage("No cards Entered");
                 }
                 break;
             case R.id.buttonCancelCardAddition:
-                showToastMessage("LongPress to Cancel addition of cardset");
+                handleExitAdditionScreen();
+
                 //todo showing dialog is better, please show dialog here.
                 break;
             default:
                 break;
+        }
+    }
+
+    private void handleExitAdditionScreen() {
+        if (word2def.size() != 0) {
+            confirmationDialog.show(CANCEL_DIALOG_STRING, "Cancel Add Card", CONFIRM_BEFORE_CANCEL);
+        } else {
+            getActivity().onBackPressed();
         }
     }
 
@@ -202,10 +220,20 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
         switch (view.getId()) {
             case R.id.buttonCancelCardAddition: {
                 //todo : handle going back to the card set screen here
+                getActivity().onBackPressed();
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public void confirmDialogAction(int reqID, boolean confirmation) {
+        if (reqID == CONFIRM_BEFORE_CANCEL) {
+            if (confirmation) {
+                getActivity().onBackPressed();
+            }
+        }
     }
 
     /**

@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     def nav_version = "1.0.0-alpha07"
 
+    implementation "com.yuyakaido.android:card-stack-view:2.1.0"
     def lifecycle_version = "1.1.1"
 
     // ViewModel and LiveData

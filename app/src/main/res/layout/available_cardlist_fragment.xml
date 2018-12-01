@@ -24,6 +24,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/colorAccent"
-            android:text="+" />
+            android:text="Add new Card Set" />
     </LinearLayout>
 </LinearLayout>
