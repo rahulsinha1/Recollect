@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import hci.phasedifference.recollect.R;
-import hci.phasedifference.recollect.datamodel.ActiveDataHandler;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,8 +65,8 @@ public class LearnMode extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_learn_mode, container, false);
-        TextView tv = view.findViewById(R.id.tvlearnmode);
-        tv.setText(ActiveDataHandler.getInstance().getDisplayStack().toString());
+        //TextView tv = view.findViewById(R.id.tvlearnmode);
+        //tv.setText(ActiveDataHandler.getInstance().getDisplayStack().toString());
         return view;
     }
 

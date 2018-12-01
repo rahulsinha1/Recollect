@@ -59,6 +59,8 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
 
+    implementation "androidx.drawerlayout:drawerlayout:1.0.0"
+
     // optional - Test helpers
     // this library depends on the Kotlin standard library
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
