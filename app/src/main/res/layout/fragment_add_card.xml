@@ -24,7 +24,7 @@
             android:id="@+id/editTextCardSetName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="9"
+            android:layout_weight="8"
             android:ems="10"
             android:hint="Enter Name for Card Set"
             android:inputType="textPersonName" />
@@ -33,7 +33,7 @@
             android:id="@+id/buttonOK"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="OK" />
 
     </LinearLayout>
@@ -63,18 +63,19 @@
         android:layout_weight="1">
 
         <Button
+            android:id="@+id/buttonSaveWords"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Save" />
+
+        <Button
             android:id="@+id/buttonAddMore"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Add More" />
 
-        <Button
-            android:id="@+id/buttonSaveWords"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Save" />
     </LinearLayout>
 
 

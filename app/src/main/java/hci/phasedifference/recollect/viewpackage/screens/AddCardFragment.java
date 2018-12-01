@@ -3,6 +3,7 @@ package hci.phasedifference.recollect.viewpackage.screens;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     private Button buttonOK;
     private Button buttonSave;
     private Button buttonCancel;
+    private boolean nameEntered;
 
     private String title;
     private Map<String, String> word2def;
@@ -88,6 +90,9 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
         TextView tv = view.findViewById(R.id.tvaddcard);
         tv.setText("addSet mode avinash");
 
+        Integer id = this.getId();
+        trace("fragment id is :" + Integer.toHexString(id));
+
         etTitle = view.findViewById(R.id.editTextCardSetName);
         etWord = view.findViewById(R.id.editTextWord);
         etDefn = view.findViewById(R.id.editTextDefinition);
@@ -106,6 +111,9 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
 
         word2def = new HashMap<>();
 
+        nameEntered = false;
+        handleEnablingViews();
+        title = "";
         return view;
     }
 
@@ -143,9 +151,12 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
             case R.id.buttonOK:
                 if (getText(etTitle).isEmpty()) {
                     showToastMessage("Title Cannot be Empty");
+                    etTitle.setText(title);
 
                 } else {
                     title = etTitle.getText().toString();
+                    nameEntered = true;
+                    handleEnablingViews();
                     //todo : handle responsive disclosure here
                 }
                 break;
@@ -183,7 +194,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     }
 
     private String getText(EditText et) {
-        return et.getText().toString();
+        return et.getText().toString().trim();
     }
 
     @Override
@@ -210,6 +221,35 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void handleEnablingViews() {
+        if (nameEntered) {
+            setVisibility(true);
+        } else {
+            setVisibility(false);
+        }
+    }
+
+    private void setVisibility(boolean visibility) {
+        String text = (visibility) ? "" : " ";
+        //todo : space to hide hint
+        etWord.setText(text);
+        etDefn.setText(text);
+
+        etWord.setEnabled(visibility);
+        etDefn.setEnabled(visibility);
+        buttonAddMore.setEnabled(visibility);
+        buttonSave.setEnabled(visibility);
+    }
+
+    public void handleBackButton() {
+        trace("handlebackbutton called");
+    }
+
+
+    private void trace(String str) {
+        Log.d("ABG", str);
     }
 
 }

@@ -39,5 +39,14 @@
         android:id="@+id/addCardFragment"
         android:name="hci.phasedifference.recollect.viewpackage.screens.AddCardFragment"
         android:label="fragment_add_card"
-        tools:layout="@layout/fragment_add_card"></fragment>
+        tools:layout="@layout/fragment_add_card">
+        <action
+            android:id="@+id/action_addCardFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popExitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/availableCardsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
