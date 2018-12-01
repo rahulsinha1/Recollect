@@ -93,5 +93,9 @@ public class ActiveDataHandler {
         viewModel.addAcardSet(c);
     }
 
+    public void removeCardSet(CardSetImpl c) {
+        viewModel.removeCardSet(c);
+    }
+
 
 }

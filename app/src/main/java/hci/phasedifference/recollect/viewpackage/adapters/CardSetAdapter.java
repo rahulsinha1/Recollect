@@ -62,6 +62,11 @@ public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.CardSetH
             button.setOnClickListener(this);
             button = itemView.findViewById(R.id.buttonViewMode);
             button.setOnClickListener(this);
+            button = itemView.findViewById(R.id.buttonDelete);
+            button.setOnClickListener(this);
+            button = itemView.findViewById(R.id.buttonEdit);
+            button.setOnClickListener(this);
+
         }
 
         @Override

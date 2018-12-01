@@ -59,6 +59,22 @@
                 android:layout_weight="1"
                 android:text="View" />
 
+
+            <Button
+                android:id="@+id/buttonDelete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Delete" />
+
+
+            <Button
+                android:id="@+id/buttonEdit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Edit" />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

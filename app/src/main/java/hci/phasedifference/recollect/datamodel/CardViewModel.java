@@ -22,6 +22,11 @@ public class CardViewModel extends AndroidViewModel {
         update(allCards.getValue());
     }
 
+    public void removeCardSet(CardSetImpl c) {
+        allCards.getValue().removeCardSet(c);
+        update(allCards.getValue());
+    }
+
     public void insert(AvailableCardSets availableCardSets) {
         repo.insert(availableCardSets);
     }

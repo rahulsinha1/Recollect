@@ -20,6 +20,7 @@ import hci.phasedifference.recollect.R;
 import hci.phasedifference.recollect.datamodel.ActiveDataHandler;
 import hci.phasedifference.recollect.datamodel.AvailableCardSets;
 import hci.phasedifference.recollect.datamodel.CardViewModel;
+import hci.phasedifference.recollect.datamodel.datarepresentaion.CardSetImpl;
 import hci.phasedifference.recollect.viewpackage.adapters.CardSetAdapter;
 import hci.phasedifference.recollect.viewpackage.adapters.CardSetItemOnClickListener;
 
@@ -32,11 +33,15 @@ import hci.phasedifference.recollect.viewpackage.adapters.CardSetItemOnClickList
  * Use the {@link AvailableCardsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AvailableCardsFragment extends Fragment implements CardSetItemOnClickListener, View.OnClickListener {
+public class AvailableCardsFragment extends Fragment implements CardSetItemOnClickListener, View.OnClickListener, ConfirmDialogListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private final String DELETE_DIALOG_MESSAGE = "Deleting cannot be reversed, Do you want to continue?";
+
+    private final int REQUEST_DELETE_CARD_SET = 1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -44,7 +49,8 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
     private CardViewModel cardViewModel;
     private AvailableCardSets availableCardSets;
     private ActiveDataHandler activeDataHandler;
-
+    private DialogHandler confirmationDialog;
+    private CardSetImpl cardSetTobeDeleted;
     private OnFragmentInteractionListener mListener;
 
     public AvailableCardsFragment() {
@@ -105,6 +111,7 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
             }
         });
 
+        confirmationDialog = new DialogHandler(getContext(), this);
         ActiveDataHandler.getInstance().setViewModel(cardViewModel);
 
         return cardSetview;
@@ -137,19 +144,30 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view, int position) {
-        activeDataHandler.activateCardSet(
-                availableCardSets.getLocalsets().get(position));
         //todo
         switch (view.getId()) {
             case R.id.buttonLearnMode:
+                activeDataHandler.activateCardSet(
+                        availableCardSets.getLocalsets().get(position));
                 Navigation.findNavController(view).navigate(R.id.actionGotoLearnMode);
                 break;
             case R.id.buttonViewMode:
+                activeDataHandler.activateCardSet(
+                        availableCardSets.getLocalsets().get(position));
                 Navigation.findNavController(view).navigate(R.id.actionGotoViewMode);
                 break;
             case R.id.addCardSet:
                 Navigation.findNavController(view).navigate(R.id.actionGotoAddCard);
                 break;
+            case R.id.buttonDelete:
+                cardSetTobeDeleted = availableCardSets.getLocalsets().get(position);
+                //todo : handle confirm dialog here
+                confirmationDialog.show(DELETE_DIALOG_MESSAGE, "Delete Card Set", REQUEST_DELETE_CARD_SET);
+                break;
+            case R.id.buttonEdit:
+                //todo handle edit mode here
+                break;
+
         }
     }
 
@@ -158,6 +176,21 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
         switch (view.getId()) {
             case R.id.addCardSet:
                 Navigation.findNavController(view).navigate(R.id.actionGotoAddCard);
+                break;
+        }
+    }
+
+    @Override
+    public void confirmDialogAction(int reqID, boolean confirmation) {
+        if (!confirmation) {
+            return;
+        }
+        switch (reqID) {
+            case REQUEST_DELETE_CARD_SET:
+                if (cardSetTobeDeleted != null) {
+                    ActiveDataHandler.getInstance().removeCardSet(cardSetTobeDeleted);
+                    cardSetTobeDeleted = null;
+                }
                 break;
         }
     }

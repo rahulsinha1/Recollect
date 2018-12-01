@@ -45,6 +45,10 @@ public class AvailableCardSets {
         localsets.add(set);
     }
 
+    public void removeCardSet(CardSetImpl set) {
+        localsets.remove(set);
+    }
+
     public List<CardSetImpl> getAvailableCardSets() {
         return getListCopy(localsets);
     }
