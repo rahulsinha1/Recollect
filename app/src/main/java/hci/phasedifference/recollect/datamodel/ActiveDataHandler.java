@@ -7,7 +7,6 @@ import hci.phasedifference.recollect.datamodel.datarepresentaion.CardSetImpl;
 import hci.phasedifference.recollect.datamodel.datarepresentaion.LeitnerLevels;
 
 import java.util.List;
-import java.util.Random;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -26,6 +25,7 @@ public class ActiveDataHandler {
     }
 
     private ActiveDataHandler() {
+        displayCardStack = new Stack<>();
     }
 
     public static ActiveDataHandler getInstance() {
@@ -38,17 +38,7 @@ public class ActiveDataHandler {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void activateCardSet(CardSetImpl cardSet) {
         curCardSet = cardSet;
-        displayCardStack = new Stack<>();
-
-        List<Card> list = curCardSet.getCards();
-        List<Card> displayList = list
-                .stream()
-                .filter(b -> (b.getLevel() != LeitnerLevels.MASTERED))
-                .collect(Collectors.toList());
-
-        for (Card c : displayList) {
-            displayCardStack.push(c);
-        }
+        displayCardStack = getDisplayStack();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -71,20 +61,25 @@ public class ActiveDataHandler {
         return displayList;
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public Stack<Card> getDisplayStack() {
+        displayCardStack = new Stack<>();
+
+        List<Card> list = curCardSet.getCards();
+        List<Card> displayList = list
+                .stream()
+                .filter(b -> (b.getLevel() != LeitnerLevels.MASTERED))
+                .collect(Collectors.toList());
+
+        for (Card c : displayList) {
+            displayCardStack.push(c);
+        }
         return displayCardStack;
     }
 
     public Stack<Card> setUserGuess(Card c, boolean guess) {
         Card newCard = curCardSet.setUserGuess(c, guess);
-        if (newCard.getLevel() != LeitnerLevels.MASTERED) {
-            int index = 0;
-            Random r = new Random();
-            if (displayCardStack.size() != 0) {
-                index = Math.abs(r.nextInt()) % displayCardStack.size();
-            }
-            displayCardStack.insertElementAt(newCard, index);
-        }
         return displayCardStack;
 
     }
