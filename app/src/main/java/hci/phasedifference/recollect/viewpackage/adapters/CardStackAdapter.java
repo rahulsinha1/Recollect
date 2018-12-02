@@ -37,7 +37,10 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Card card = cards.get(position);
-        holder.name.setText(card.getWord());
+        holder.word.setText("Word : " + card.getWord());
+        holder.defn.setText("Definition : " + card.getDefinition());
+        holder.defn.setVisibility(View.INVISIBLE);
+        holder.status.setText(card.getLevel().toString());
     }
 
     @Override
@@ -53,14 +56,25 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         this.cards = cards;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name;
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView word, defn, status;
         ImageView image;
 
         ViewHolder(View view) {
             super(view);
-            this.name = view.findViewById(R.id.item_name);
+            this.word = view.findViewById(R.id.item_word);
+            this.status = view.findViewById(R.id.item_status);
+            this.defn = view.findViewById(R.id.item_defn);
             this.image = view.findViewById(R.id.item_image);
+
+            this.image.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.item_image) {
+                this.defn.setVisibility(View.VISIBLE);
+            }
         }
     }
 

@@ -162,7 +162,6 @@ public class LearnMode extends Fragment implements CardStackListener {
 
     @Override
     public void onCardDragging(Direction direction, float ratio) {
-        Log.d("CardStackView", "onCardDragging: d = " + direction.name() + ", r = " + ratio);
     }
 
     @Override
@@ -182,12 +181,11 @@ public class LearnMode extends Fragment implements CardStackListener {
 
     @Override
     public void onCardRewound() {
-        Log.d("CardStackView", "onCardRewound: " + manager.getTopPosition());
+
     }
 
     @Override
     public void onCardCanceled() {
-        Log.d("CardStackView", "onCardCanceled:" + manager.getTopPosition());
     }
 
 

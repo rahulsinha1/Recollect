@@ -127,6 +127,8 @@ public class CardSetImpl implements CardSetInterface {
             case REVIEWING1:
                 return ((guess) ? LeitnerLevels.REVIEWING2 : LeitnerLevels.REVIEWING1);
             case REVIEWING2:
+                return ((guess) ? LeitnerLevels.REVIEWING3 : LeitnerLevels.REVIEWING1);
+            case REVIEWING3:
                 return ((guess) ? LeitnerLevels.MASTERED : LeitnerLevels.REVIEWING1);
             case MASTERED:
                 return LeitnerLevels.MASTERED;
