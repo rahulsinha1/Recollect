@@ -37,4 +37,19 @@ public class DialogHandler {
         builder.show();
     }
 
+    public void showOkDialog(String message, String title, int reqid) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(applicationContext);
+
+        if (title != null) builder.setTitle(title);
+
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DialogHandler.this.listener.confirmDialogAction(reqid, true);
+            }
+        });
+        builder.show();
+    }
+
 }

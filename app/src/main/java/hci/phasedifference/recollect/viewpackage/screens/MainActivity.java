@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import hci.phasedifference.recollect.R;
 
@@ -15,17 +14,14 @@ public class MainActivity extends AppCompatActivity
         ViewMode.OnFragmentInteractionListener {
 
 
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        ActionBar actionBar;
-        actionBar = getSupportActionBar();
-
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
 

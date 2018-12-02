@@ -18,10 +18,11 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
 
     private LayoutInflater inflater;
     private List<Card> cards;
+    private static View.OnClickListener clickListener;
 
-    public CardStackAdapter(Context context, List<Card> card) {
+    public CardStackAdapter(Context context, List<Card> card, View.OnClickListener clickListener) {
         this.inflater = LayoutInflater.from(context);
-        //this.cards = card;
+        CardStackAdapter.clickListener = clickListener;
         this.cards = new ArrayList<Card>();
         for (Card c : card) {
             this.cards.add(new Card(c));
@@ -41,6 +42,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         holder.defn.setText("Definition : " + card.getDefinition());
         holder.defn.setVisibility(View.INVISIBLE);
         holder.status.setText(card.getLevel().toString());
+
     }
 
     @Override
@@ -56,6 +58,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         this.cards = cards;
     }
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView word, defn, status;
         ImageView image;
@@ -68,13 +71,13 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
             this.image = view.findViewById(R.id.item_image);
 
             this.image.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.item_image) {
-                this.defn.setVisibility(View.VISIBLE);
-            }
+            defn.setVisibility(View.VISIBLE);
+            CardStackAdapter.clickListener.onClick(v);
         }
     }
 

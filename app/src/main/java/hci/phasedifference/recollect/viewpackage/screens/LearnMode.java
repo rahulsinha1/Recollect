@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 import com.yuyakaido.android.cardstackview.*;
 import hci.phasedifference.recollect.R;
@@ -22,7 +23,7 @@ import hci.phasedifference.recollect.viewpackage.adapters.CardStackAdapter;
  * Use the {@link LearnMode#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LearnMode extends Fragment implements CardStackListener {
+public class LearnMode extends Fragment implements CardStackListener, View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,6 +36,7 @@ public class LearnMode extends Fragment implements CardStackListener {
     private CardStackLayoutManager manager;
     private CardStackAdapter adapter;
     private CardStackView cardStackView;
+    private LinearLayout layout_definition;
 
 
     private OnFragmentInteractionListener mListener;
@@ -75,8 +77,9 @@ public class LearnMode extends Fragment implements CardStackListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_learn_mode, container, false);
-        //TextView tv = view.findViewById(R.id.tvlearnmode);
-        //tv.setText(ActiveDataHandler.getInstance().getDisplayStack().toString());
+
+        layout_definition = view.findViewById(R.id.layout_definition);
+        layout_definition.setVisibility(View.INVISIBLE);
 
         setupCardStackView(view);
         setupButton(view);
@@ -113,33 +116,11 @@ public class LearnMode extends Fragment implements CardStackListener {
     }
 
     private void setupButton(View v) {
-        View skip = v.findViewById(R.id.skip_button);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
-                        .setDirection(Direction.Left)
-                        .setDuration(50)
-                        .setInterpolator(new AccelerateInterpolator())
-                        .build();
-                manager.setSwipeAnimationSetting(setting);
-                cardStackView.swipe();
-            }
-        });
+        View no = v.findViewById(R.id.button_no);
+        View yes = v.findViewById(R.id.button_yes);
 
-        View like = v.findViewById(R.id.like_button);
-        like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
-                        .setDirection(Direction.Right)
-                        .setDuration(50)
-                        .setInterpolator(new AccelerateInterpolator())
-                        .build();
-                manager.setSwipeAnimationSetting(setting);
-                cardStackView.swipe();
-            }
-        });
+        no.setOnClickListener(this);
+        yes.setOnClickListener(this);
     }
 
     private void initialize(View v) {
@@ -154,7 +135,7 @@ public class LearnMode extends Fragment implements CardStackListener {
         manager.setCanScrollHorizontal(true);
         manager.setCanScrollVertical(false);
         adapter = new CardStackAdapter(getContext(),
-                ActiveDataHandler.getInstance().getDisplayStack());
+                ActiveDataHandler.getInstance().getDisplayStack(), this);
         cardStackView = v.findViewById(R.id.card_stack_view);
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
@@ -177,6 +158,8 @@ public class LearnMode extends Fragment implements CardStackListener {
             adapter.setCards(ActiveDataHandler.getInstance().getDisplayStack());
             adapter.notifyDataSetChanged();
         }
+        layout_definition.setVisibility(View.INVISIBLE);
+
     }
 
     @Override
@@ -187,6 +170,34 @@ public class LearnMode extends Fragment implements CardStackListener {
     @Override
     public void onCardCanceled() {
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.item_image:
+                layout_definition.setVisibility(View.VISIBLE);
+                break;
+            case R.id.button_yes:
+                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
+                        .setDirection(Direction.Right)
+                        .setDuration(50)
+                        .setInterpolator(new AccelerateInterpolator())
+                        .build();
+                manager.setSwipeAnimationSetting(setting);
+                cardStackView.swipe();
+                break;
+            case R.id.button_no:
+                setting = new SwipeAnimationSetting.Builder()
+                        .setDirection(Direction.Left)
+                        .setDuration(50)
+                        .setInterpolator(new AccelerateInterpolator())
+                        .build();
+                manager.setSwipeAnimationSetting(setting);
+                cardStackView.swipe();
+                break;
+        }
+    }
+
 
 
     /**
