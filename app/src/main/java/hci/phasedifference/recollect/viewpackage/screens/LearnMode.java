@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DiffUtil;
 import com.yuyakaido.android.cardstackview.*;
 import hci.phasedifference.recollect.R;
+import hci.phasedifference.recollect.datamodel.ActiveDataHandler;
+import hci.phasedifference.recollect.datamodel.datarepresentaion.Card;
 import hci.phasedifference.recollect.viewpackage.adapters.CardStackAdapter;
 
 import java.util.ArrayList;
@@ -122,25 +124,11 @@ public class LearnMode extends Fragment implements CardStackListener {
             public void onClick(View v) {
                 SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
                         .setDirection(Direction.Left)
-                        .setDuration(200)
+                        .setDuration(50)
                         .setInterpolator(new AccelerateInterpolator())
                         .build();
                 manager.setSwipeAnimationSetting(setting);
                 cardStackView.swipe();
-            }
-        });
-
-        View rewind = v.findViewById(R.id.rewind_button);
-        rewind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RewindAnimationSetting setting = new RewindAnimationSetting.Builder()
-                        .setDirection(Direction.Bottom)
-                        .setDuration(200)
-                        .setInterpolator(new DecelerateInterpolator())
-                        .build();
-                manager.setRewindAnimationSetting(setting);
-                cardStackView.rewind();
             }
         });
 
@@ -150,7 +138,7 @@ public class LearnMode extends Fragment implements CardStackListener {
             public void onClick(View v) {
                 SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
                         .setDirection(Direction.Right)
-                        .setDuration(200)
+                        .setDuration(50)
                         .setInterpolator(new AccelerateInterpolator())
                         .build();
                 manager.setSwipeAnimationSetting(setting);
@@ -161,7 +149,7 @@ public class LearnMode extends Fragment implements CardStackListener {
 
     private void initialize(View v) {
         manager = new CardStackLayoutManager(getContext(), this);
-        manager.setStackFrom(StackFrom.Top);
+        manager.setStackFrom(StackFrom.None);
         manager.setVisibleCount(3);
         manager.setTranslationInterval(8.0f);
         manager.setScaleInterval(0.95f);
@@ -170,115 +158,115 @@ public class LearnMode extends Fragment implements CardStackListener {
         manager.setDirections(Direction.HORIZONTAL);
         manager.setCanScrollHorizontal(true);
         manager.setCanScrollVertical(false);
-        adapter = new CardStackAdapter(getContext(), createSpots());
+        adapter = new CardStackAdapter(getContext(),
+                ActiveDataHandler.getInstance().getDisplayStack());
         cardStackView = v.findViewById(R.id.card_stack_view);
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
     }
 
     private void paginate() {
-        List<Spot> oldList = adapter.getSpots();
-        List<Spot> newList = new ArrayList<Spot>() {{
-            addAll(adapter.getSpots());
-            addAll(createSpots());
+        List<Card> oldList = adapter.getCards();
+        List<Card> newList = new ArrayList<Card>() {{
+            addAll(ActiveDataHandler.getInstance().getDisplayStack());
         }};
-        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
-        // DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
-        adapter.setSpots(newList);
-        // result.dispatchUpdatesTo(adapter);
+        CardDiffCallback callback = new CardDiffCallback(oldList, newList);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+        adapter.setCards(newList);
+        result.dispatchUpdatesTo(adapter);
     }
 
-    private void reload() {
-        List<Spot> oldList = adapter.getSpots();
-        List<Spot> newList = createSpots();
-        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
-        // DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
-        adapter.setSpots(newList);
-        // result.dispatchUpdatesTo(adapter);
-    }
+//    private void reload() {
+//        List<Spot> oldList = adapter.getCards();
+//        List<Spot> newList = createSpots();
+//        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
+//        // DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+//        adapter.setCards(newList);
+//        // result.dispatchUpdatesTo(adapter);
+//    }
+//
+//    private void addFirst(final int size) {
+//        List<Spot> oldList = adapter.getCards();
+//        List<Spot> newList = new ArrayList<Spot>() {{
+//            addAll(adapter.getCards());
+//            for (int i = 0; i < size; i++) {
+//                add(manager.getTopPosition(), createSpot());
+//            }
+//        }};
+//        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
+//        //  DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+//        adapter.setCards(newList);
+//        // result.dispatchUpdatesTo(adapter);
+//    }
+//
+//    private void addLast(final int size) {
+//        List<Spot> oldList = adapter.getCards();
+//        List<Spot> newList = new ArrayList<Spot>() {{
+//            addAll(adapter.getCards());
+//            for (int i = 0; i < size; i++) {
+//                add(createSpot());
+//            }
+//        }};
+//        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
+//        //  DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+//        adapter.setCards(newList);
+//        //  result.dispatchUpdatesTo(adapter);
+//    }
+//
+//    private void removeFirst(final int size) {
+//        if (adapter.getCards().isEmpty()) {
+//            return;
+//        }
+//
+//        List<Spot> oldList = adapter.getCards();
+//        List<Spot> newList = new ArrayList<Spot>() {{
+//            addAll(adapter.getCards());
+//            for (int i = 0; i < size; i++) {
+//                remove(manager.getTopPosition());
+//            }
+//        }};
+//        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
+//        // DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+//        adapter.setCards(newList);
+//        //  result.dispatchUpdatesTo(adapter);
+//    }
+//
+//    private void removeLast(final int size) {
+//        if (adapter.getCards().isEmpty()) {
+//            return;
+//        }
+//
+//        List<Spot> oldList = adapter.getCards();
+//        List<Spot> newList = new ArrayList<Spot>() {{
+//            addAll(adapter.getCards());
+//            for (int i = 0; i < size; i++) {
+//                remove(size() - 1);
+//            }
+//        }};
+//        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
+//        //  DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+//        adapter.setCards(newList);
+//        // result.dispatchUpdatesTo(adapter);
+//    }
 
-    private void addFirst(final int size) {
-        List<Spot> oldList = adapter.getSpots();
-        List<Spot> newList = new ArrayList<Spot>() {{
-            addAll(adapter.getSpots());
-            for (int i = 0; i < size; i++) {
-                add(manager.getTopPosition(), createSpot());
-            }
-        }};
-        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
-        //  DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
-        adapter.setSpots(newList);
-        // result.dispatchUpdatesTo(adapter);
-    }
-
-    private void addLast(final int size) {
-        List<Spot> oldList = adapter.getSpots();
-        List<Spot> newList = new ArrayList<Spot>() {{
-            addAll(adapter.getSpots());
-            for (int i = 0; i < size; i++) {
-                add(createSpot());
-            }
-        }};
-        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
-        //  DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
-        adapter.setSpots(newList);
-        //  result.dispatchUpdatesTo(adapter);
-    }
-
-    private void removeFirst(final int size) {
-        if (adapter.getSpots().isEmpty()) {
-            return;
-        }
-
-        List<Spot> oldList = adapter.getSpots();
-        List<Spot> newList = new ArrayList<Spot>() {{
-            addAll(adapter.getSpots());
-            for (int i = 0; i < size; i++) {
-                remove(manager.getTopPosition());
-            }
-        }};
-        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
-        // DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
-        adapter.setSpots(newList);
-        //  result.dispatchUpdatesTo(adapter);
-    }
-
-    private void removeLast(final int size) {
-        if (adapter.getSpots().isEmpty()) {
-            return;
-        }
-
-        List<Spot> oldList = adapter.getSpots();
-        List<Spot> newList = new ArrayList<Spot>() {{
-            addAll(adapter.getSpots());
-            for (int i = 0; i < size; i++) {
-                remove(size() - 1);
-            }
-        }};
-        SpotDiffCallback callback = new SpotDiffCallback(oldList, newList);
-        //  DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
-        adapter.setSpots(newList);
-        // result.dispatchUpdatesTo(adapter);
-    }
-
-    private Spot createSpot() {
-        return new Spot("Yasaka Shrine", "Kyoto", "https://source.unsplash.com/Xq1ntWruZQI/600x800");
-    }
-
-    private List<Spot> createSpots() {
-        List<Spot> spots = new ArrayList<>();
-        spots.add(new Spot("Yasaka Shrine", "Kyoto", "https://source.unsplash.com/Xq1ntWruZQI/600x800"));
-        spots.add(new Spot("Fushimi Inari Shrine", "Kyoto", "https://source.unsplash.com/NYyCqdBOKwc/600x800"));
-        spots.add(new Spot("Bamboo Forest", "Kyoto", "https://source.unsplash.com/buF62ewDLcQ/600x800"));
-        spots.add(new Spot("Brooklyn Bridge", "New York", "https://source.unsplash.com/THozNzxEP3g/600x800"));
-        spots.add(new Spot("Empire State Building", "New York", "https://source.unsplash.com/USrZRcRS2Lw/600x800"));
-        spots.add(new Spot("The statue of Liberty", "New York", "https://source.unsplash.com/PeFk7fzxTdk/600x800"));
-        spots.add(new Spot("Louvre Museum", "Paris", "https://source.unsplash.com/LrMWHKqilUw/600x800"));
-        spots.add(new Spot("Eiffel Tower", "Paris", "https://source.unsplash.com/HN-5Z6AmxrM/600x800"));
-        spots.add(new Spot("Big Ben", "London", "https://source.unsplash.com/CdVAUADdqEc/600x800"));
-        spots.add(new Spot("Great Wall of China", "China", "https://source.unsplash.com/AWh9C-QjhE4/600x800"));
-        return spots;
-    }
+//    private Spot createSpot() {
+//        return new Spot("Yasaka Shrine", "Kyoto", "https://source.unsplash.com/Xq1ntWruZQI/600x800");
+//    }
+//
+//    private List<Spot> createSpots() {
+//        List<Spot> spots = new ArrayList<>();
+//        spots.add(new Spot("Yasaka Shrine", "Kyoto", "https://source.unsplash.com/Xq1ntWruZQI/600x800"));
+//        spots.add(new Spot("Fushimi Inari Shrine", "Kyoto", "https://source.unsplash.com/NYyCqdBOKwc/600x800"));
+//        spots.add(new Spot("Bamboo Forest", "Kyoto", "https://source.unsplash.com/buF62ewDLcQ/600x800"));
+//        spots.add(new Spot("Brooklyn Bridge", "New York", "https://source.unsplash.com/THozNzxEP3g/600x800"));
+//        spots.add(new Spot("Empire State Building", "New York", "https://source.unsplash.com/USrZRcRS2Lw/600x800"));
+//        spots.add(new Spot("The statue of Liberty", "New York", "https://source.unsplash.com/PeFk7fzxTdk/600x800"));
+//        spots.add(new Spot("Louvre Museum", "Paris", "https://source.unsplash.com/LrMWHKqilUw/600x800"));
+//        spots.add(new Spot("Eiffel Tower", "Paris", "https://source.unsplash.com/HN-5Z6AmxrM/600x800"));
+//        spots.add(new Spot("Big Ben", "London", "https://source.unsplash.com/CdVAUADdqEc/600x800"));
+//        spots.add(new Spot("Great Wall of China", "China", "https://source.unsplash.com/AWh9C-QjhE4/600x800"));
+//        return spots;
+//    }
 
 
     @Override
@@ -288,9 +276,15 @@ public class LearnMode extends Fragment implements CardStackListener {
 
     @Override
     public void onCardSwiped(Direction direction) {
+        int position = manager.getTopPosition();
         Log.d("CardStackView", "onCardSwiped: p = " + manager.getTopPosition() + ", d = " + direction);
-        if (manager.getTopPosition() == adapter.getItemCount() - 5) {
-            // paginate();
+        if (direction == Direction.Left) {
+            ActiveDataHandler.getInstance().setUserGuess(adapter.getCards().get(manager.getTopPosition() - 1), false);
+        } else {
+            ActiveDataHandler.getInstance().setUserGuess(adapter.getCards().get(manager.getTopPosition() - 1), true);
+        }
+        if (position == adapter.getItemCount()) {
+            adapter.notifyDataSetChanged();
         }
     }
 

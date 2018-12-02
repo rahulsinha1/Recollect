@@ -2,15 +2,16 @@ package hci.phasedifference.recollect.viewpackage.screens;
 
 
 import androidx.recyclerview.widget.DiffUtil;
+import hci.phasedifference.recollect.datamodel.datarepresentaion.Card;
 
 import java.util.List;
 
-public class SpotDiffCallback extends DiffUtil.Callback {
+public class CardDiffCallback extends DiffUtil.Callback {
 
-    private final List<Spot> oldList;
-    private final List<Spot> newList;
+    private final List<Card> oldList;
+    private final List<Card> newList;
 
-    public SpotDiffCallback(List<Spot> oldList, List<Spot> newList) {
+    public CardDiffCallback(List<Card> oldList, List<Card> newList) {
         this.oldList = oldList;
         this.newList = newList;
     }
@@ -27,16 +28,14 @@ public class SpotDiffCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldPosition, int newPosition) {
-        return oldList.get(oldPosition).id == newList.get(newPosition).id;
+        return oldList.get(oldPosition).equals(newPosition);
     }
 
     @Override
     public boolean areContentsTheSame(int oldPosition, int newPosition) {
-        Spot oldSpot = oldList.get(oldPosition);
-        Spot newSpot = newList.get(newPosition);
-        return oldSpot.name.equals(newSpot.name)
-                && oldSpot.city.equals(newSpot.city)
-                && oldSpot.url.equals(newSpot.url);
+        Card oldCard = oldList.get(oldPosition);
+        Card newCard = newList.get(newPosition);
+        return oldCard.equals(newCard);
     }
 
 }

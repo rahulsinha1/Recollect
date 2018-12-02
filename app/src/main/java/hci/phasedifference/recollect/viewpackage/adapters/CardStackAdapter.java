@@ -9,18 +9,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import hci.phasedifference.recollect.R;
-import hci.phasedifference.recollect.viewpackage.screens.Spot;
+import hci.phasedifference.recollect.datamodel.datarepresentaion.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
-    private List<Spot> spots;
+    private List<Card> cards;
 
-    public CardStackAdapter(Context context, List<Spot> spots) {
+    public CardStackAdapter(Context context, List<Card> card) {
         this.inflater = LayoutInflater.from(context);
-        this.spots = spots;
+        this.cards = new ArrayList<Card>();
+        for (Card c : card) {
+            this.cards.add(new Card(c));
+        }
     }
 
     @NonNull
@@ -31,21 +35,21 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Spot spot = spots.get(position);
-        holder.name.setText(spot.name);
+        Card card = cards.get(position);
+        holder.name.setText(card.getWord());
     }
 
     @Override
     public int getItemCount() {
-        return spots.size();
+        return cards.size();
     }
 
-    public List<Spot> getSpots() {
-        return spots;
+    public List<Card> getCards() {
+        return cards;
     }
 
-    public void setSpots(List<Spot> spots) {
-        this.spots = spots;
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

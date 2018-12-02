@@ -97,5 +97,4 @@ public class ActiveDataHandler {
         viewModel.removeCardSet(c);
     }
 
-
 }

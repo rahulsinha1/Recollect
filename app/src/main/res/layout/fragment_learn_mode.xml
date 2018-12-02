@@ -42,31 +42,13 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:hapticFeedbackEnabled="true"
-                        android:src="@drawable/skip_red_24dp"
+                        android:src="@drawable/ic_close_red_100dp"
                         app:backgroundTint="@android:color/white"
                         app:fabSize="auto"
                         app:rippleColor="#22ED7563" />
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/rewind_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:hapticFeedbackEnabled="true"
-                        android:src="@drawable/rewind_blue_24dp"
-                        app:backgroundTint="@android:color/white"
-                        app:fabSize="mini"
-                        app:rippleColor="#225BC9FA" />
-
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -85,7 +67,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:hapticFeedbackEnabled="true"
-                        android:src="@drawable/like_green_24dp"
+                        android:src="@drawable/ic_check_green_100dp"
                         app:backgroundTint="@android:color/white"
                         app:fabSize="auto"
                         app:rippleColor="#226FE2B3" />
