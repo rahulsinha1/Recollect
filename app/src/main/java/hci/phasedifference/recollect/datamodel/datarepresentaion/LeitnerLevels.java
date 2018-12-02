@@ -2,8 +2,8 @@ package hci.phasedifference.recollect.datamodel.datarepresentaion;
 
 public enum LeitnerLevels {
     NEW_WORD("Showing a New Word"), MASTERED("Mastered"),
-    REVIEWING1("Reviewing, will be shown twice"),
-    REVIEWING2("Reviewing, will be shown once again"),
+    REVIEWING1("Relearning, try to remember!"),
+    REVIEWING2("Revising, get this right one more time"),
     REVIEWING3("Well Done! you are about to master this word");
 
     String value;

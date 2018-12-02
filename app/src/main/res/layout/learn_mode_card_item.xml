@@ -34,8 +34,9 @@
                 android:padding="15dp"
                 android:text="Status"
                 android:textAlignment="center"
+                android:textColor="@android:color/holo_orange_light"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorPrimary"
+                android:textStyle="italic"
                 android:textSize="15sp" />
 
             <TextView

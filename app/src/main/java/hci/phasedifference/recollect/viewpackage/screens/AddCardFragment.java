@@ -113,11 +113,12 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
         buttonAddMore.setOnClickListener(this);
         buttonOK.setOnClickListener(this);
         buttonCancel.setOnClickListener(this);
+        etTitle.setOnClickListener(this);
         buttonCancel.setOnLongClickListener(this);
 
         word2def = new HashMap<>();
 
-
+        buttonOK.setVisibility(View.INVISIBLE);
         nameEntered = false;
         handleEnablingViews();
         title = "";
@@ -155,6 +156,9 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.editTextCardSetName:
+                buttonOK.setVisibility(View.VISIBLE);
+                break;
             case R.id.buttonOK:
                 if (getText(etTitle).isEmpty()) {
                     showToastMessage("Title Cannot be Empty");
@@ -166,6 +170,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
                     handleEnablingViews();
                     //todo : handle responsive disclosure here
                 }
+                buttonOK.setVisibility(View.INVISIBLE);
                 break;
             case R.id.buttonAddMore: {
                 storeCurrentDataToMap();
@@ -173,6 +178,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
             break;
             case R.id.buttonSaveWords:
                 //todo : handle data base addition here.
+                storeCurrentDataToMap();
                 if (word2def.size() != 0) {
                     CardSetImpl c = new CardSetImpl(title);
                     for (Map.Entry<String, String> e : word2def.entrySet()) {

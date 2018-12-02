@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -152,9 +153,10 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
                 Navigation.findNavController(view).navigate(R.id.actionGotoLearnMode);
                 break;
             case R.id.buttonViewMode:
-                activeDataHandler.activateCardSet(
-                        availableCardSets.getLocalsets().get(position));
-                Navigation.findNavController(view).navigate(R.id.actionGotoViewMode);
+                showToastMessage("Not Part of this demo");
+//                activeDataHandler.activateCardSet(
+//                        availableCardSets.getLocalsets().get(position));
+//                Navigation.findNavController(view).navigate(R.id.actionGotoViewMode);
                 break;
             case R.id.addCardSet:
                 Navigation.findNavController(view).navigate(R.id.actionGotoAddCard);
@@ -166,10 +168,16 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
                 break;
             case R.id.buttonEdit:
                 //todo handle edit mode here
+                showToastMessage("Not part of this demo");
                 break;
 
         }
     }
+
+    private void showToastMessage(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+    }
+
 
     @Override
     public void onClick(View view) {

@@ -13,7 +13,10 @@ import androidx.fragment.app.Fragment;
 import com.yuyakaido.android.cardstackview.*;
 import hci.phasedifference.recollect.R;
 import hci.phasedifference.recollect.datamodel.ActiveDataHandler;
+import hci.phasedifference.recollect.datamodel.datarepresentaion.Card;
 import hci.phasedifference.recollect.viewpackage.adapters.CardStackAdapter;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,11 +26,12 @@ import hci.phasedifference.recollect.viewpackage.adapters.CardStackAdapter;
  * Use the {@link LearnMode#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LearnMode extends Fragment implements CardStackListener, View.OnClickListener {
+public class LearnMode extends Fragment implements CardStackListener, View.OnClickListener, ConfirmDialogListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private final int CONGRATULATIONS_SCREEN_CONFIRMATION = 3;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -155,8 +159,15 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
             ActiveDataHandler.getInstance().setUserGuess(adapter.getCards().get(manager.getTopPosition() - 1), true);
         }
         if (position == adapter.getItemCount()) {
-            adapter.setCards(ActiveDataHandler.getInstance().getDisplayStack());
-            adapter.notifyDataSetChanged();
+            List<Card> stack = ActiveDataHandler.getInstance().getDisplayStack();
+            if (stack.size() > 0) {
+                adapter.setCards(stack);
+                adapter.notifyDataSetChanged();
+            } else {
+                new DialogHandler(getContext(), this)
+                        .showOkDialog("You have Successfully memorised the Set", "Congratulations!!!",
+                                CONGRATULATIONS_SCREEN_CONFIRMATION);
+            }
         }
         layout_definition.setVisibility(View.INVISIBLE);
 
@@ -198,6 +209,12 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
         }
     }
 
+    @Override
+    public void confirmDialogAction(int reqID, boolean confirmation) {
+        if (reqID == CONGRATULATIONS_SCREEN_CONFIRMATION) {
+            getActivity().onBackPressed();
+        }
+    }
 
 
     /**
