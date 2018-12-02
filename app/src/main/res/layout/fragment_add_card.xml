@@ -7,12 +7,7 @@
     tools:context=".viewpackage.screens.AddCardFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/tvaddcard"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/hello_blank_fragment" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,24 +33,45 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editTextWord"
+
+    <TextView
+        android:id="@+id/card_serial_status"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:ems="10"
-        android:hint="Enter Word"
-        android:inputType="textPersonName" />
+        android:padding="15dp"
+        android:text="Status"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp" />
 
-
-    <EditText
-        android:id="@+id/editTextDefinition"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:hint="Enter Definition"
-        android:inputType="textPersonName" />
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editTextWord"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Enter Word"
+            android:inputType="textPersonName" />
+
+
+        <EditText
+            android:id="@+id/editTextDefinition"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Enter Definition"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,6 +94,11 @@
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3" />
 
     <Button
         android:id="@+id/buttonCancelCardAddition"

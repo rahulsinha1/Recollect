@@ -45,6 +45,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     private Button buttonCancel;
     private boolean nameEntered;
     private DialogHandler confirmationDialog;
+    private TextView tvStatus;
 
     private String title;
     private Map<String, String> word2def;
@@ -92,8 +93,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_card, container, false);
-        TextView tv = view.findViewById(R.id.tvaddcard);
-        tv.setText("addSet mode avinash");
+        tvStatus = view.findViewById(R.id.card_serial_status);
 
         Integer id = this.getId();
         trace("fragment id is :" + Integer.toHexString(id));
@@ -116,6 +116,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
         buttonCancel.setOnLongClickListener(this);
 
         word2def = new HashMap<>();
+
 
         nameEntered = false;
         handleEnablingViews();
@@ -167,17 +168,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
                 }
                 break;
             case R.id.buttonAddMore: {
-                if (getText(etWord).isEmpty()) {
-                    showToastMessage("Word cannot be empty");
-                } else if (getText(etDefn).isEmpty()) {
-                    showToastMessage("Definition cannot be empty");
-                } else {
-                    if (!word2def.containsKey(getText(etWord))) {
-                        word2def.put(getText(etWord), getText(etDefn));
-                        etWord.setText("");
-                        etDefn.setText("");
-                    }
-                }
+                storeCurrentDataToMap();
             }
             break;
             case R.id.buttonSaveWords:
@@ -201,6 +192,24 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
             default:
                 break;
         }
+        tvStatus.setText(getStatusString());
+    }
+
+    private boolean storeCurrentDataToMap() {
+        boolean retval = false;
+        if (getText(etWord).isEmpty()) {
+            showToastMessage("Word cannot be empty");
+        } else if (getText(etDefn).isEmpty()) {
+            showToastMessage("Definition cannot be empty");
+        } else {
+            if (!word2def.containsKey(getText(etWord))) {
+                word2def.put(getText(etWord), getText(etDefn));
+                retval = true;
+                etWord.setText("");
+                etDefn.setText("");
+            }
+        }
+        return retval;
     }
 
     private void handleExitAdditionScreen() {
@@ -236,6 +245,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
         }
     }
 
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -259,16 +269,28 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
         }
     }
 
-    private void setVisibility(boolean visibility) {
-        String text = (visibility) ? "" : " ";
-        //todo : space to hide hint
-        etWord.setText(text);
-        etDefn.setText(text);
+    private void setVisibility(boolean v) {
 
-        etWord.setEnabled(visibility);
-        etDefn.setEnabled(visibility);
-        buttonAddMore.setEnabled(visibility);
-        buttonSave.setEnabled(visibility);
+        int visibility = (v) ? View.VISIBLE : View.INVISIBLE;
+
+        etWord.setVisibility(visibility);
+        etDefn.setVisibility(visibility);
+        buttonAddMore.setVisibility(visibility);
+        buttonSave.setVisibility(visibility);
+        tvStatus.setVisibility(visibility);
+    }
+
+    private String getStatusString() {
+        switch (word2def.size()) {
+            case 0:
+                return "Enter First Word and Definition";
+            case 1:
+                return "Entering Second word";
+            case 2:
+                return "Entering Third word";
+            default:
+                return "Entering word number " + (word2def.size() + 1);
+        }
     }
 
     public void handleBackButton() {
