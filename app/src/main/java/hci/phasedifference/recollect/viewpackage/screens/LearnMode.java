@@ -1,5 +1,6 @@
 package hci.phasedifference.recollect.viewpackage.screens;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -90,6 +91,9 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
 
         tv_masteredNumber = view.findViewById(R.id.tv_masteredNumber);
 
+        Activity a = getActivity();
+        ((MainActivity) a).setActionBarTitle(ActiveDataHandler.getInstance().getCurrentTitle());
+
         setupCardStackView(view);
         setupButton(view);
         return view;
@@ -149,7 +153,7 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
         masteredCards = ActiveDataHandler.getInstance().getMasteredList().size();
-        totalCards = ActiveDataHandler.getInstance().getDisplayStack().size();
+        totalCards = ActiveDataHandler.getInstance().getAllCardsList().size();
         updateStatusMasteredText();
     }
 

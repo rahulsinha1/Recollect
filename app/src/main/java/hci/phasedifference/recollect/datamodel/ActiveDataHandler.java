@@ -94,6 +94,9 @@ public class ActiveDataHandler {
 
     }
 
+    public String getCurrentTitle() {
+        return curCardSet.getTitle();
+    }
     public void addCardSet(CardSetImpl c) {
         viewModel.addAcardSet(c);
     }

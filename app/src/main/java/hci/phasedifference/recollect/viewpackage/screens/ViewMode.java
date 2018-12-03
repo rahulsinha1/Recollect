@@ -1,5 +1,6 @@
 package hci.phasedifference.recollect.viewpackage.screens;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -82,6 +83,10 @@ public class ViewMode extends Fragment implements View.OnClickListener, CardStac
 
         tv_masteredNumber = view.findViewById(R.id.tv_masteredNumber);
 
+
+        Activity a = getActivity();
+        ((MainActivity) a).setActionBarTitle(ActiveDataHandler.getInstance().getCurrentTitle());
+
         setupCardStackView(view);
         setupButton(view);
         return view;
@@ -117,10 +122,10 @@ public class ViewMode extends Fragment implements View.OnClickListener, CardStac
     }
 
     private void setupButton(View v) {
-        View no = v.findViewById(R.id.button_no);
+        //View no = v.findViewById(R.id.button_no);
         View yes = v.findViewById(R.id.button_yes);
 
-        no.setOnClickListener(this);
+        //no.setOnClickListener(this);
         yes.setOnClickListener(this);
     }
 
@@ -174,12 +179,11 @@ public class ViewMode extends Fragment implements View.OnClickListener, CardStac
     private void updateStatusMasteredText(int position) {
         if (position > totalCards) position = totalCards;
         masteredCards = ActiveDataHandler.getInstance().getMasteredList().size();
-        tv_masteredNumber.setText("Viewing :" + (position) + "/" + totalCards);
+        tv_masteredNumber.setText("Seen :" + (position) + "/" + totalCards);
     }
 
     @Override
     public void onCardRewound() {
-
     }
 
     @Override

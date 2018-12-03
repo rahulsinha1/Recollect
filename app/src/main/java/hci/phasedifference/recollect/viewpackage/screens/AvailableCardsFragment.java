@@ -1,5 +1,6 @@
 package hci.phasedifference.recollect.viewpackage.screens;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
@@ -114,6 +115,10 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
 
         confirmationDialog = new DialogHandler(getContext(), this);
         ActiveDataHandler.getInstance().setViewModel(cardViewModel);
+
+
+        Activity a = getActivity();
+        ((MainActivity) a).setActionBarTitle("Recollect");
 
         return cardSetview;
     }
