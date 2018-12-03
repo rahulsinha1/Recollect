@@ -153,10 +153,10 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
                 Navigation.findNavController(view).navigate(R.id.actionGotoLearnMode);
                 break;
             case R.id.buttonViewMode:
-                showToastMessage("Not Part of this demo");
-//                activeDataHandler.activateCardSet(
-//                        availableCardSets.getLocalsets().get(position));
-//                Navigation.findNavController(view).navigate(R.id.actionGotoViewMode);
+                // showToastMessage("Not Part of this demo");
+                activeDataHandler.activateCardSet(
+                        availableCardSets.getLocalsets().get(position));
+                Navigation.findNavController(view).navigate(R.id.actionGotoViewMode);
                 break;
             case R.id.addCardSet:
                 Navigation.findNavController(view).navigate(R.id.actionGotoAddCard);

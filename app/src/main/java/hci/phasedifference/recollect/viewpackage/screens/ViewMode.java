@@ -3,13 +3,17 @@ package hci.phasedifference.recollect.viewpackage.screens;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
+import com.yuyakaido.android.cardstackview.*;
 import hci.phasedifference.recollect.R;
 import hci.phasedifference.recollect.datamodel.ActiveDataHandler;
+import hci.phasedifference.recollect.viewpackage.adapters.CardStackAdapterViewMode;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,17 +23,25 @@ import hci.phasedifference.recollect.datamodel.ActiveDataHandler;
  * Use the {@link ViewMode#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ViewMode extends Fragment {
+public class ViewMode extends Fragment implements View.OnClickListener, CardStackListener, ConfirmDialogListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private final int CONGRATULATIONS_SCREEN_CONFIRMATION = 3;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private CardStackLayoutManager manager;
+    private CardStackAdapterViewMode adapter;
+    private CardStackView cardStackView;
+    private TextView tv_masteredNumber;
+    private int totalCards;
+    private int masteredCards;
+
+    private LearnMode.OnFragmentInteractionListener mListener;
 
     public ViewMode() {
         // Required empty public constructor
@@ -67,10 +79,12 @@ public class ViewMode extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_mode, container, false);
-        TextView tv = view.findViewById(R.id.tvviewmode);
-        tv.setText(ActiveDataHandler.getInstance().getDisplayStack().toString());
-        return view;
 
+        tv_masteredNumber = view.findViewById(R.id.tv_masteredNumber);
+
+        setupCardStackView(view);
+        setupButton(view);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -83,8 +97,8 @@ public class ViewMode extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof LearnMode.OnFragmentInteractionListener) {
+            mListener = (LearnMode.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -96,6 +110,113 @@ public class ViewMode extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
+    private void setupCardStackView(View v) {
+        initialize(v);
+    }
+
+    private void setupButton(View v) {
+        View no = v.findViewById(R.id.button_no);
+        View yes = v.findViewById(R.id.button_yes);
+
+        no.setOnClickListener(this);
+        yes.setOnClickListener(this);
+    }
+
+    private void initialize(View v) {
+        manager = new CardStackLayoutManager(getContext(), this);
+        manager.setStackFrom(StackFrom.None);
+        manager.setVisibleCount(3);
+        manager.setTranslationInterval(8.0f);
+        manager.setScaleInterval(0.95f);
+        manager.setSwipeThreshold(0.3f);
+        manager.setMaxDegree(0.0f);
+        manager.setDirections(Direction.HORIZONTAL);
+        manager.setCanScrollHorizontal(true);
+        manager.setCanScrollVertical(false);
+        adapter = new CardStackAdapterViewMode(getContext(),
+                ActiveDataHandler.getInstance().getAllCardsList(), this);
+        cardStackView = v.findViewById(R.id.card_stack_view);
+        cardStackView.setLayoutManager(manager);
+        cardStackView.setAdapter(adapter);
+        masteredCards = ActiveDataHandler.getInstance().getMasteredList().size();
+        totalCards = ActiveDataHandler.getInstance().getAllCardsList().size();
+        updateStatusMasteredText(1);
+    }
+
+    @Override
+    public void onCardDragging(Direction direction, float ratio) {
+    }
+
+    @Override
+    public void onCardSwiped(Direction direction) {
+        int position = manager.getTopPosition();
+        Log.d("CardStackView", "onCardSwiped: p = " + manager.getTopPosition() + ", d = " + direction);
+        if (direction == Direction.Left) {
+            ActiveDataHandler.getInstance().setUserGuess(adapter.getCards().get(manager.getTopPosition() - 1), false);
+        } else {
+            ActiveDataHandler.getInstance().setUserGuess(adapter.getCards().get(manager.getTopPosition() - 1), true);
+        }
+        if (position == adapter.getItemCount()) {
+            new DialogHandler(getContext(), this)
+                    .showOkDialog("You have viewed all the cards in the Set.", "Complete",
+                            CONGRATULATIONS_SCREEN_CONFIRMATION);
+        }
+
+        handlePostCardSwipe(position + 1);
+    }
+
+    private void handlePostCardSwipe(int position) {
+        updateStatusMasteredText(position);
+    }
+
+    private void updateStatusMasteredText(int position) {
+        if (position > totalCards) position = totalCards;
+        masteredCards = ActiveDataHandler.getInstance().getMasteredList().size();
+        tv_masteredNumber.setText("Viewing :" + (position) + "/" + totalCards);
+    }
+
+    @Override
+    public void onCardRewound() {
+
+    }
+
+    @Override
+    public void onCardCanceled() {
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_yes:
+                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
+                        .setDirection(Direction.Right)
+                        .setDuration(50)
+                        .setInterpolator(new AccelerateInterpolator())
+                        .build();
+                manager.setSwipeAnimationSetting(setting);
+                cardStackView.swipe();
+                break;
+            case R.id.button_no:
+                setting = new SwipeAnimationSetting.Builder()
+                        .setDirection(Direction.Left)
+                        .setDuration(50)
+                        .setInterpolator(new AccelerateInterpolator())
+                        .build();
+                manager.setSwipeAnimationSetting(setting);
+                cardStackView.swipe();
+                break;
+        }
+    }
+
+    @Override
+    public void confirmDialogAction(int reqID, boolean confirmation) {
+        if (reqID == CONGRATULATIONS_SCREEN_CONFIRMATION) {
+            getActivity().onBackPressed();
+        }
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -111,4 +232,6 @@ public class ViewMode extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

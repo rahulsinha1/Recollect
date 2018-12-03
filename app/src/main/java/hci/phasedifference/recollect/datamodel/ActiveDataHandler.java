@@ -51,6 +51,16 @@ public class ActiveDataHandler {
         return displayList;
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public List<Card> getAllCardsList() {
+
+        List<Card> displayList = curCardSet.getCards()
+                .stream()
+                .collect(Collectors.toList());
+        return displayList;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public List<Card> getStarredList() {
 

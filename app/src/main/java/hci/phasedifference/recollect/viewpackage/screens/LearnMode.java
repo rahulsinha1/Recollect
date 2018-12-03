@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.yuyakaido.android.cardstackview.*;
 import hci.phasedifference.recollect.R;
@@ -41,7 +42,9 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
     private CardStackAdapter adapter;
     private CardStackView cardStackView;
     private LinearLayout layout_definition;
-
+    private TextView tv_masteredNumber;
+    private int totalCards;
+    private int masteredCards;
 
     private OnFragmentInteractionListener mListener;
 
@@ -84,6 +87,8 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
 
         layout_definition = view.findViewById(R.id.layout_definition);
         layout_definition.setVisibility(View.INVISIBLE);
+
+        tv_masteredNumber = view.findViewById(R.id.tv_masteredNumber);
 
         setupCardStackView(view);
         setupButton(view);
@@ -143,6 +148,9 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
         cardStackView = v.findViewById(R.id.card_stack_view);
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
+        masteredCards = ActiveDataHandler.getInstance().getMasteredList().size();
+        totalCards = ActiveDataHandler.getInstance().getDisplayStack().size();
+        updateStatusMasteredText();
     }
 
     @Override
@@ -169,9 +177,19 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
                                 CONGRATULATIONS_SCREEN_CONFIRMATION);
             }
         }
+
+        handlePostCardSwipe();
+    }
+
+    private void handlePostCardSwipe() {
         layout_definition.setVisibility(View.INVISIBLE);
         manager.setCanScrollHorizontal(false);
+        updateStatusMasteredText();
+    }
 
+    private void updateStatusMasteredText() {
+        masteredCards = ActiveDataHandler.getInstance().getMasteredList().size();
+        tv_masteredNumber.setText("Mastered :" + masteredCards + "/" + totalCards);
     }
 
     @Override
