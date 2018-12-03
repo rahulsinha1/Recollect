@@ -101,6 +101,10 @@ public class ActiveDataHandler {
         viewModel.addAcardSet(c);
     }
 
+    public void relearnCardSet() {
+        curCardSet.relearn();
+    }
+
     public void removeCardSet(CardSetImpl c) {
         viewModel.removeCardSet(c);
     }

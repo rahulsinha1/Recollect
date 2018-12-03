@@ -9,19 +9,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_masteredNumber"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text=""
-            android:textAlignment="center"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -36,10 +23,10 @@
                 android:clipToPadding="false"
                 android:padding="20dp">
 
-                <com.yuyakaido.android.cardstackview.CardStackView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/card_stack_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></com.yuyakaido.android.cardstackview.CardStackView>
+                    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
             </RelativeLayout>
 
@@ -52,8 +39,17 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
+
             <Button
-                android:id="@+id/button_yes"
+                android:id="@+id/button_prev"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Previous"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/button_next"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

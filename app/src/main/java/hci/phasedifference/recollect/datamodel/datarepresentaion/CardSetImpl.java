@@ -144,4 +144,14 @@ public class CardSetImpl implements CardSetInterface {
                 .map(b -> b.toString())
                 .reduce("", (a, b) -> a + b);
     }
+
+    public void relearn() {
+        List<Card> newCards = new ArrayList<>();
+        Card c1;
+        for (Card c : cards) {
+            c1 = c.setLevel(LeitnerLevels.NEW_WORD);
+            newCards.add(c1);
+        }
+        this.cards = newCards;
+    }
 }

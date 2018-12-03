@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,7 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
     private final String DELETE_DIALOG_MESSAGE = "Deleting cannot be reversed, Do you want to continue?";
 
     private final int REQUEST_DELETE_CARD_SET = 1;
+    private final int REQUEST_RELEARN_CARD_SET = 2;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -54,6 +56,7 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
     private DialogHandler confirmationDialog;
     private CardSetImpl cardSetTobeDeleted;
     private OnFragmentInteractionListener mListener;
+    private NavController navigationController;
 
     public AvailableCardsFragment() {
         // Required empty public constructor
@@ -155,7 +158,12 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
             case R.id.buttonLearnMode:
                 activeDataHandler.activateCardSet(
                         availableCardSets.getLocalsets().get(position));
-                Navigation.findNavController(view).navigate(R.id.actionGotoLearnMode);
+                if (activeDataHandler.getDisplayStack().size() == 0) {
+                    confirmationDialog.show("Do you want to relearn?", "Set Already Memorized", REQUEST_RELEARN_CARD_SET);
+                } else {
+                    navigationController = Navigation.findNavController(view);
+                    navigationController.navigate(R.id.actionGotoLearnMode);
+                }
                 break;
             case R.id.buttonViewMode:
                 // showToastMessage("Not Part of this demo");
@@ -205,6 +213,10 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
                     cardSetTobeDeleted = null;
                 }
                 break;
+            case REQUEST_RELEARN_CARD_SET:
+                activeDataHandler.relearnCardSet();
+                navigationController.navigate(R.id.actionGotoLearnMode);
+
         }
     }
 

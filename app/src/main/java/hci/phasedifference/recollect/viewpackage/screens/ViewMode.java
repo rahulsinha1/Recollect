@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.widget.TextView;
 import androidx.fragment.app.Fragment;
-import com.yuyakaido.android.cardstackview.*;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.RecyclerView;
 import hci.phasedifference.recollect.R;
 import hci.phasedifference.recollect.datamodel.ActiveDataHandler;
 import hci.phasedifference.recollect.viewpackage.adapters.CardStackAdapterViewMode;
@@ -24,7 +23,7 @@ import hci.phasedifference.recollect.viewpackage.adapters.CardStackAdapterViewMo
  * Use the {@link ViewMode#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ViewMode extends Fragment implements View.OnClickListener, CardStackListener, ConfirmDialogListener {
+public class ViewMode extends Fragment implements View.OnClickListener, ConfirmDialogListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,13 +34,10 @@ public class ViewMode extends Fragment implements View.OnClickListener, CardStac
     private String mParam1;
     private String mParam2;
 
-    private CardStackLayoutManager manager;
+    private LinearLayoutManager manager;
     private CardStackAdapterViewMode adapter;
-    private CardStackView cardStackView;
-    private TextView tv_masteredNumber;
-    private int totalCards;
-    private int masteredCards;
-
+    private RecyclerView cardStackView;
+    private RecyclerView.SmoothScroller smoothScroller;
     private LearnMode.OnFragmentInteractionListener mListener;
 
     public ViewMode() {
@@ -81,7 +77,6 @@ public class ViewMode extends Fragment implements View.OnClickListener, CardStac
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_mode, container, false);
 
-        tv_masteredNumber = view.findViewById(R.id.tv_masteredNumber);
 
 
         Activity a = getActivity();
@@ -89,6 +84,13 @@ public class ViewMode extends Fragment implements View.OnClickListener, CardStac
 
         setupCardStackView(view);
         setupButton(view);
+
+        smoothScroller = new LinearSmoothScroller(getContext()) {
+            @Override
+            protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+            }
+        };
         return view;
     }
 
@@ -122,94 +124,38 @@ public class ViewMode extends Fragment implements View.OnClickListener, CardStac
     }
 
     private void setupButton(View v) {
-        //View no = v.findViewById(R.id.button_no);
-        View yes = v.findViewById(R.id.button_yes);
+        View prev = v.findViewById(R.id.button_prev);
+        View next = v.findViewById(R.id.button_next);
 
-        //no.setOnClickListener(this);
-        yes.setOnClickListener(this);
+        prev.setOnClickListener(this);
+        next.setOnClickListener(this);
     }
 
     private void initialize(View v) {
-        manager = new CardStackLayoutManager(getContext(), this);
-        manager.setStackFrom(StackFrom.None);
-        manager.setVisibleCount(3);
-        manager.setTranslationInterval(8.0f);
-        manager.setScaleInterval(0.95f);
-        manager.setSwipeThreshold(0.3f);
-        manager.setMaxDegree(0.0f);
-        manager.setDirections(Direction.HORIZONTAL);
-        manager.setCanScrollHorizontal(true);
-        manager.setCanScrollVertical(false);
         adapter = new CardStackAdapterViewMode(getContext(),
                 ActiveDataHandler.getInstance().getAllCardsList(), this);
         cardStackView = v.findViewById(R.id.card_stack_view);
+
+        manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         cardStackView.setLayoutManager(manager);
+        cardStackView.setHasFixedSize(true);
         cardStackView.setAdapter(adapter);
-        masteredCards = ActiveDataHandler.getInstance().getMasteredList().size();
-        totalCards = ActiveDataHandler.getInstance().getAllCardsList().size();
-        updateStatusMasteredText(1);
-    }
-
-    @Override
-    public void onCardDragging(Direction direction, float ratio) {
-    }
-
-    @Override
-    public void onCardSwiped(Direction direction) {
-        int position = manager.getTopPosition();
-        Log.d("CardStackView", "onCardSwiped: p = " + manager.getTopPosition() + ", d = " + direction);
-        if (direction == Direction.Left) {
-            ActiveDataHandler.getInstance().setUserGuess(adapter.getCards().get(manager.getTopPosition() - 1), false);
-        } else {
-            ActiveDataHandler.getInstance().setUserGuess(adapter.getCards().get(manager.getTopPosition() - 1), true);
-        }
-        if (position == adapter.getItemCount()) {
-            new DialogHandler(getContext(), this)
-                    .showOkDialog("You have viewed all the cards in the Set.", "Complete",
-                            CONGRATULATIONS_SCREEN_CONFIRMATION);
-        }
-
-        handlePostCardSwipe(position + 1);
-    }
-
-    private void handlePostCardSwipe(int position) {
-        updateStatusMasteredText(position);
-    }
-
-    private void updateStatusMasteredText(int position) {
-        if (position > totalCards) position = totalCards;
-        masteredCards = ActiveDataHandler.getInstance().getMasteredList().size();
-        tv_masteredNumber.setText("Seen :" + (position) + "/" + totalCards);
-    }
-
-    @Override
-    public void onCardRewound() {
-    }
-
-    @Override
-    public void onCardCanceled() {
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_yes:
-                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
-                        .setDirection(Direction.Right)
-                        .setDuration(50)
-                        .setInterpolator(new AccelerateInterpolator())
-                        .build();
-                manager.setSwipeAnimationSetting(setting);
-                cardStackView.swipe();
+            case R.id.button_next:
+                int pos = manager.findFirstVisibleItemPosition();
+                smoothScroller.setTargetPosition(pos + 1);
+                manager.startSmoothScroll(smoothScroller);
                 break;
-            case R.id.button_no:
-                setting = new SwipeAnimationSetting.Builder()
-                        .setDirection(Direction.Left)
-                        .setDuration(50)
-                        .setInterpolator(new AccelerateInterpolator())
-                        .build();
-                manager.setSwipeAnimationSetting(setting);
-                cardStackView.swipe();
+            case R.id.button_prev:
+                pos = manager.findFirstVisibleItemPosition();
+                if (pos > 0) {
+                    smoothScroller.setTargetPosition(pos - 1);
+                    manager.startSmoothScroll(smoothScroller);
+                }
                 break;
         }
     }

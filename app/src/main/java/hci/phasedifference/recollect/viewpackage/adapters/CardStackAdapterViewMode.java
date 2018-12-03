@@ -40,7 +40,7 @@ public class CardStackAdapterViewMode extends RecyclerView.Adapter<CardStackAdap
         Card card = cards.get(position);
         holder.word.setText("Word : " + card.getWord());
         holder.defn.setText("Definition : " + card.getDefinition());
-        holder.status.setText("Viewing");
+        holder.status.setText("Viewing " + (position + 1) + "/" + cards.size());
 
     }
 
