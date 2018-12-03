@@ -4,10 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-public class DialogHandler {
+public class DialogHandler implements DialogInterface.OnCancelListener {
 
     ConfirmDialogListener listener;
     Context applicationContext;
+    int requestId;
 
     public DialogHandler(Context applicationContext, ConfirmDialogListener listener) {
         this.applicationContext = applicationContext;
@@ -17,7 +18,7 @@ public class DialogHandler {
 
     public void show(String message, String title, int reqid) {
         AlertDialog.Builder builder = new AlertDialog.Builder(applicationContext);
-
+        requestId = reqid;
         if (title != null) builder.setTitle(title);
 
         builder.setMessage(message);
@@ -34,12 +35,13 @@ public class DialogHandler {
             }
         });
 
+        builder.setOnCancelListener(this);
         builder.show();
     }
 
     public void showOkDialog(String message, String title, int reqid) {
         AlertDialog.Builder builder = new AlertDialog.Builder(applicationContext);
-
+        requestId = reqid;
         if (title != null) builder.setTitle(title);
 
         builder.setMessage(message);
@@ -49,7 +51,12 @@ public class DialogHandler {
                 DialogHandler.this.listener.confirmDialogAction(reqid, true);
             }
         });
+        builder.setOnCancelListener(this);
         builder.show();
     }
 
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        listener.confirmDialogAction(requestId, false);
+    }
 }

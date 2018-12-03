@@ -136,7 +136,7 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
         manager.setSwipeThreshold(0.3f);
         manager.setMaxDegree(0.0f);
         manager.setDirections(Direction.HORIZONTAL);
-        manager.setCanScrollHorizontal(true);
+        manager.setCanScrollHorizontal(false);
         manager.setCanScrollVertical(false);
         adapter = new CardStackAdapter(getContext(),
                 ActiveDataHandler.getInstance().getDisplayStack(), this);
@@ -170,6 +170,7 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
             }
         }
         layout_definition.setVisibility(View.INVISIBLE);
+        manager.setCanScrollHorizontal(false);
 
     }
 
@@ -187,6 +188,7 @@ public class LearnMode extends Fragment implements CardStackListener, View.OnCli
         switch (v.getId()) {
             case R.id.item_image:
                 layout_definition.setVisibility(View.VISIBLE);
+                manager.setCanScrollHorizontal(true);
                 break;
             case R.id.button_yes:
                 SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
