@@ -174,6 +174,7 @@ public class EditMode extends Fragment implements View.OnClickListener, ConfirmD
 
     @Override
     public void onPause() {
+        ActiveDataHandler.getInstance().commitChanges();
         super.onPause();
     }
 

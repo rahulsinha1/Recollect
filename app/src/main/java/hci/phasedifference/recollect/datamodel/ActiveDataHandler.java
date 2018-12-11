@@ -28,6 +28,11 @@ public class ActiveDataHandler {
         displayCardStack = new Stack<>();
     }
 
+    public void commitChanges() {
+        CardSetImpl newSet = new CardSetImpl(curCardSet);
+        viewModel.removeCardSet(curCardSet);
+        viewModel.addAcardSet(newSet);
+    }
 
     public static ActiveDataHandler getInstance() {
         if (instance == null) {
