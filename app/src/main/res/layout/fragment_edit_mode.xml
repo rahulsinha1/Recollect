@@ -55,6 +55,8 @@
             </LinearLayout>
 
             <Button
+                android:background="@drawable/button_black_slector"
+                android:textColor="@android:color/white"
                 android:id="@+id/button_add_moreCards"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

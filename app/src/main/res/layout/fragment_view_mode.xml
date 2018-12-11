@@ -41,6 +41,8 @@
 
 
             <Button
+                android:background="@drawable/button_black_slector"
+                android:textColor="@android:color/white"
                 android:id="@+id/button_prev"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -49,6 +51,8 @@
                 android:textSize="15sp" />
 
             <Button
+                android:background="@drawable/button_black_slector"
+                android:textColor="@android:color/white"
                 android:id="@+id/button_next"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

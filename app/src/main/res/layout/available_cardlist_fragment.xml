@@ -20,6 +20,8 @@
             tools:listitem="@layout/card_item" />
 
         <Button
+            android:background="@drawable/button_black_slector"
+            android:textColor="@android:color/white"
             android:id="@+id/addCardSet"
             android:layout_width="match_parent"
             android:layout_height="0dp"

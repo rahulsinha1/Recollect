@@ -26,6 +26,8 @@
             android:inputType="textPersonName" />
 
         <Button
+            android:background="@drawable/button_black_slector"
+            android:textColor="@android:color/white"
             android:id="@+id/buttonOK"
             android:layout_height="match_parent"
             android:layout_width="0dp"
@@ -103,6 +105,8 @@
         android:layout_weight="3" />
 
     <Button
+        android:background="@drawable/button_black_slector"
+        android:textColor="@android:color/white"
         android:id="@+id/buttonCancelCardAddition"
         android:layout_width="match_parent"
         android:layout_height="0dp"
