@@ -28,6 +28,7 @@ public class ActiveDataHandler {
         displayCardStack = new Stack<>();
     }
 
+
     public static ActiveDataHandler getInstance() {
         if (instance == null) {
             instance = new ActiveDataHandler();
@@ -107,6 +108,15 @@ public class ActiveDataHandler {
 
     public void removeCardSet(CardSetImpl c) {
         viewModel.removeCardSet(c);
+    }
+
+    public void removeCard(Card c) {
+        curCardSet.removeCard(c);
+    }
+
+
+    public void addCard(String word, String defn) {
+        curCardSet.addCard(word, defn);
     }
 
 }

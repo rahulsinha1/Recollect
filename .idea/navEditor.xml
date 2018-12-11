@@ -45,6 +45,12 @@
                   <entry key="addCardFragment">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1140" />
+                            <option name="y" value="-112" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_addCardFragment_to_main_nav_graph">
@@ -60,6 +66,12 @@
                   <entry key="availableCardsFragment">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="369" />
+                            <option name="y" value="156" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="actionGotoAddCard">
@@ -77,6 +89,32 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="gotoEditMode">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="editMode">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="698" />
+                            <option name="y" value="-1236" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="editModeToAddCardMode">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -84,17 +122,38 @@
                   </entry>
                   <entry key="learnMode">
                     <value>
-                      <LayoutPositions />
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1165" />
+                            <option name="y" value="574" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                   <entry key="mainActivity">
                     <value>
-                      <LayoutPositions />
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-33" />
+                            <option name="y" value="147" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                   <entry key="viewMode">
                     <value>
-                      <LayoutPositions />
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1170" />
+                            <option name="y" value="1283" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                 </map>

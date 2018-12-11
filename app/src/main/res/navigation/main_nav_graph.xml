@@ -24,6 +24,9 @@
         <action
             android:id="@+id/actionGotoAddCard"
             app:destination="@id/addCardFragment" />
+        <action
+            android:id="@+id/gotoEditMode"
+            app:destination="@id/editMode" />
     </fragment>
     <fragment
         android:id="@+id/learnMode"
@@ -48,5 +51,14 @@
             app:popExitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/availableCardsFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/editMode"
+        android:name="hci.phasedifference.recollect.viewpackage.screens.EditMode"
+        android:label="fragment_edit_mode"
+        tools:layout="@layout/fragment_edit_mode">
+        <action
+            android:id="@+id/editModeToAddCardMode"
+            app:destination="@id/addCardFragment" />
     </fragment>
 </navigation>

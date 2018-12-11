@@ -181,7 +181,9 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
                 break;
             case R.id.buttonEdit:
                 //todo handle edit mode here
-                showToastMessage("Not part of this demo");
+                activeDataHandler.activateCardSet(
+                        availableCardSets.getLocalsets().get(position));
+                Navigation.findNavController(view).navigate(R.id.gotoEditMode);
                 break;
 
         }
