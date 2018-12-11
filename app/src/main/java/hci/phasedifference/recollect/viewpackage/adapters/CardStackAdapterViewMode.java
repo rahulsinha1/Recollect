@@ -38,8 +38,8 @@ public class CardStackAdapterViewMode extends RecyclerView.Adapter<CardStackAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Card card = cards.get(position);
-        holder.word.setText("Word : " + card.getWord());
-        holder.defn.setText("Definition : " + card.getDefinition());
+        holder.word.setText("Term : " + card.getWord());
+        holder.defn.setText("Description : " + card.getDefinition());
         holder.status.setText("Viewing " + (position + 1) + "/" + cards.size());
 
     }

@@ -43,6 +43,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     private Button buttonOK;
     private Button buttonSave;
     private Button buttonCancel;
+    private Toast toastMsg;
     private boolean nameEntered;
     private DialogHandler confirmationDialog;
     private TextView tvStatus;
@@ -133,6 +134,12 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     }
 
     @Override
+    public void onPause() {
+        saveTheCardsBeforeExit();
+        super.onPause();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -150,6 +157,11 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     }
 
     private void showToastMessage(String msg) {
+        if (toastMsg == null) {
+            toastMsg = new Toast(getContext());
+        } else {
+            toastMsg.cancel();
+        }
         Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
     }
 
@@ -179,16 +191,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
             case R.id.buttonSaveWords:
                 //todo : handle data base addition here.
                 storeCurrentDataToMap();
-                if (word2def.size() != 0) {
-                    CardSetImpl c = new CardSetImpl(title);
-                    for (Map.Entry<String, String> e : word2def.entrySet()) {
-                        c.addCard(e.getKey(), e.getValue());
-                    }
-                    ActiveDataHandler.getInstance().addCardSet(c);
-                    getActivity().onBackPressed();
-                } else {
-                    showToastMessage("No cards Entered");
-                }
+                saveTheCardsBeforeExit();
                 break;
             case R.id.buttonCancelCardAddition:
                 handleExitAdditionScreen();
@@ -201,6 +204,19 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
         tvStatus.setText(getStatusString());
     }
 
+    private void saveTheCardsBeforeExit() {
+        if (word2def.size() != 0) {
+            CardSetImpl c = new CardSetImpl(title);
+            for (Map.Entry<String, String> e : word2def.entrySet()) {
+                c.addCard(e.getKey(), e.getValue());
+            }
+            ActiveDataHandler.getInstance().addCardSet(c);
+            getActivity().onBackPressed();
+        } else {
+            showToastMessage("No cards Entered");
+        }
+    }
+
     private boolean storeCurrentDataToMap() {
         boolean retval = false;
         if (getText(etWord).isEmpty()) {
@@ -210,6 +226,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
         } else {
             if (!word2def.containsKey(getText(etWord))) {
                 word2def.put(getText(etWord), getText(etDefn));
+                showToastMessage("Word " + getText(etWord) + "Saved");
                 retval = true;
                 etWord.setText("");
                 etDefn.setText("");

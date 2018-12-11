@@ -38,8 +38,8 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Card card = cards.get(position);
-        holder.word.setText("Word : " + card.getWord());
-        holder.defn.setText("Definition : " + card.getDefinition());
+        holder.word.setText("Term : " + card.getWord());
+        holder.defn.setText("Description : " + card.getDefinition());
         holder.defn.setVisibility(View.INVISIBLE);
         holder.status.setText(card.getLevel().toString());
 

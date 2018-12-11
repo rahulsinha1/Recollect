@@ -52,10 +52,10 @@ public abstract class CardDataBase extends RoomDatabase {
             set.addCard("Danke", "Thank you");
 
 
-            CardSetImpl set1 = new CardSetImpl("French");
-            set1.addCard("Merci", "The table");
-            set1.addCard("Oui", "Yes");
-            set1.addCard("Bonjour", "Hello");
+            CardSetImpl set1 = new CardSetImpl("Chemistry");
+            set1.addCard("Hydrogen", "H");
+            set1.addCard("Chlorine", "Cl");
+            set1.addCard("Radon", "Rn");
 
 
             CardSetImpl set2 = new CardSetImpl("Spanish");
