@@ -135,6 +135,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
 
     @Override
     public void onPause() {
+        storeCurrentDataToMap();
         saveTheCardsBeforeExit();
         super.onPause();
     }
@@ -192,6 +193,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
                 //todo : handle data base addition here.
                 storeCurrentDataToMap();
                 saveTheCardsBeforeExit();
+                getActivity().onBackPressed();
                 break;
             case R.id.buttonCancelCardAddition:
                 handleExitAdditionScreen();
@@ -211,7 +213,6 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
                 c.addCard(e.getKey(), e.getValue());
             }
             ActiveDataHandler.getInstance().addCardSet(c);
-            getActivity().onBackPressed();
         } else {
             showToastMessage("No cards Entered");
         }
