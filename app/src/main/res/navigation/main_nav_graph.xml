@@ -56,9 +56,5 @@
         android:id="@+id/editMode"
         android:name="hci.phasedifference.recollect.viewpackage.screens.EditMode"
         android:label="fragment_edit_mode"
-        tools:layout="@layout/fragment_edit_mode">
-        <action
-            android:id="@+id/editModeToAddCardMode"
-            app:destination="@id/addCardFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_edit_mode"></fragment>
 </navigation>

@@ -39,7 +39,7 @@ public class CardSetImpl implements CardSetInterface {
 
     @Override
     public void addCard(String word, String definition) {
-        addCardHelper(cards.size(), word, definition, LeitnerLevels.NEW_WORD, false);
+        addCardHelper(0, word, definition, LeitnerLevels.NEW_WORD, false);
     }
 
     @Override

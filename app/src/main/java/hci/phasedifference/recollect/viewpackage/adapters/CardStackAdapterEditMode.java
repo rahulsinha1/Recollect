@@ -61,12 +61,6 @@ public class CardStackAdapterEditMode extends RecyclerView.Adapter<CardStackAdap
     }
 
 
-    public void removeCard(Card c) {
-        cards.remove(c);
-        notifyDataSetChanged();
-    }
-
-
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView word, defn;
         ImageView image;

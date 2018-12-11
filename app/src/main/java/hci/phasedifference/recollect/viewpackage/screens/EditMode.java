@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,6 +44,7 @@ public class EditMode extends Fragment implements View.OnClickListener, ConfirmD
     private RecyclerView cardStackView;
     private RecyclerView.SmoothScroller smoothScroller;
     private LearnMode.OnFragmentInteractionListener mListener;
+    private EditText etTerm, etDefn;
 
     public EditMode() {
         // Required empty public constructor
@@ -77,8 +80,17 @@ public class EditMode extends Fragment implements View.OnClickListener, ConfirmD
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_mode, container, false);
+
+        etTerm = view.findViewById(R.id.editTextWord);
+        etDefn = view.findViewById(R.id.editTextDefinition);
+
+        Button buttonAddMore = view.findViewById(R.id.button_add_moreCards);
+        buttonAddMore.setOnClickListener(this);
 
 
         Activity a = getActivity();
@@ -94,6 +106,13 @@ public class EditMode extends Fragment implements View.OnClickListener, ConfirmD
             }
         };
         return view;
+    }
+
+    private void handleVisibilityofTvs(boolean b) {
+        int visibility = (b) ? View.VISIBLE : View.INVISIBLE;
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        etTerm.setVisibility(visibility);
+        etDefn.setVisibility(visibility);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -146,10 +165,31 @@ public class EditMode extends Fragment implements View.OnClickListener, ConfirmD
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_add_moreCards:
+                if (etTerm.getVisibility() == View.VISIBLE) {
+                    String word = getText(etTerm);
+                    String defn = getText(etDefn);
+                    if (word.isEmpty() || defn.isEmpty()) {
+                        return;
+                    }
+                    ActiveDataHandler.getInstance().addCard(word, defn);
+                    etTerm.setText("");
+                    etDefn.setText("");
+                    adapter.setCards(ActiveDataHandler.getInstance().getAllCardsList());
+                    adapter.notifyDataSetChanged();
+                } else {
+                    etTerm.setText("");
+                    etDefn.setText("");
+                    //handleVisibilityofTvs(true);
+                }
                 //handle adding more cards here
-                Navigation.findNavController(v).navigate(R.id.editModeToAddCardMode);
+                //Navigation.findNavController(v).navigate(R.id.editModeToAddCardMode);
                 break;
         }
+    }
+
+
+    private String getText(EditText et) {
+        return et.getText().toString().trim();
     }
 
     @Override
@@ -160,7 +200,8 @@ public class EditMode extends Fragment implements View.OnClickListener, ConfirmD
                 //handle card deletion here
                 Card cardToRemove = adapter.getCardAt(position);
                 ActiveDataHandler.getInstance().removeCard(cardToRemove);
-                adapter.removeCard(cardToRemove);
+                adapter.setCards(ActiveDataHandler.getInstance().getAllCardsList());
+                adapter.notifyDataSetChanged();
                 break;
         }
     }
