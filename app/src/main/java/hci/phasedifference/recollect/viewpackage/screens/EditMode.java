@@ -33,7 +33,7 @@ public class EditMode extends Fragment implements View.OnClickListener, ConfirmD
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private final int CONGRATULATIONS_SCREEN_CONFIRMATION = 3;
+    private final int DELETE_CARD_CONFIRMATION = 4;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -45,6 +45,7 @@ public class EditMode extends Fragment implements View.OnClickListener, ConfirmD
     private RecyclerView.SmoothScroller smoothScroller;
     private LearnMode.OnFragmentInteractionListener mListener;
     private EditText etTerm, etDefn;
+    private Card cardToDelete;
 
     public EditMode() {
         // Required empty public constructor
@@ -198,18 +199,22 @@ public class EditMode extends Fragment implements View.OnClickListener, ConfirmD
         switch (view.getId()) {
             case R.id.buttonDeleteCard:
                 //handle card deletion here
-                Card cardToRemove = adapter.getCardAt(position);
-                ActiveDataHandler.getInstance().removeCard(cardToRemove);
-                adapter.setCards(ActiveDataHandler.getInstance().getAllCardsList());
-                adapter.notifyDataSetChanged();
+                cardToDelete = adapter.getCardAt(position);
+                DialogHandler d = new DialogHandler(getContext(), this);
+                d.show("Delete cannot be reversed, Do you want to continue?",
+                        "Delete Card", DELETE_CARD_CONFIRMATION);
+
                 break;
         }
     }
 
     @Override
     public void confirmDialogAction(int reqID, boolean confirmation) {
-        if (reqID == CONGRATULATIONS_SCREEN_CONFIRMATION) {
-            getActivity().onBackPressed();
+        if (reqID == DELETE_CARD_CONFIRMATION && confirmation) {
+            Card cardToRemove = cardToDelete;
+            ActiveDataHandler.getInstance().removeCard(cardToRemove);
+            adapter.setCards(ActiveDataHandler.getInstance().getAllCardsList());
+            adapter.notifyDataSetChanged();
         }
     }
 

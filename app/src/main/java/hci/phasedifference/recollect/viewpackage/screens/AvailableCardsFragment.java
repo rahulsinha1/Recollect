@@ -158,7 +158,9 @@ public class AvailableCardsFragment extends Fragment implements CardSetItemOnCli
             case R.id.buttonLearnMode:
                 activeDataHandler.activateCardSet(
                         availableCardSets.getLocalsets().get(position));
-                if (activeDataHandler.getDisplayStack().size() == 0) {
+                if (activeDataHandler.getAllCardsList().size() == 0) {
+                    showToastMessage("Please add cards to set using edit");
+                } else if (activeDataHandler.getDisplayStack().size() == 0) {
                     confirmationDialog.show("Do you want to relearn?", "Set Already Memorized", REQUEST_RELEARN_CARD_SET);
                 } else {
                     navigationController = Navigation.findNavController(view);

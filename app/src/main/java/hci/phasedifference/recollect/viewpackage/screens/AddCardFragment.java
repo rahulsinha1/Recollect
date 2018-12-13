@@ -27,7 +27,7 @@ import java.util.Map;
  * Use the {@link AddCardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddCardFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener, ConfirmDialogListener {
+public class AddCardFragment extends Fragment implements View.OnClickListener, ConfirmDialogListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,7 +42,6 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
     private Button buttonAddMore;
     private Button buttonOK;
     private Button buttonSave;
-    private Button buttonCancel;
     private Toast toastMsg;
     private boolean nameEntered;
     private DialogHandler confirmationDialog;
@@ -106,16 +105,13 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
         buttonOK = view.findViewById(R.id.buttonOK);
         buttonAddMore = view.findViewById(R.id.buttonAddMore);
         buttonSave = view.findViewById(R.id.buttonSaveWords);
-        buttonCancel = view.findViewById(R.id.buttonCancelCardAddition);
 
         confirmationDialog = new DialogHandler(getContext(), this);
 
         buttonSave.setOnClickListener(this);
         buttonAddMore.setOnClickListener(this);
         buttonOK.setOnClickListener(this);
-        buttonCancel.setOnClickListener(this);
         etTitle.setOnClickListener(this);
-        buttonCancel.setOnLongClickListener(this);
 
         word2def = new HashMap<>();
 
@@ -191,14 +187,9 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
             break;
             case R.id.buttonSaveWords:
                 //todo : handle data base addition here.
-                storeCurrentDataToMap();
-                saveTheCardsBeforeExit();
+                //storeCurrentDataToMap();
+                //saveTheCardsBeforeExit();
                 getActivity().onBackPressed();
-                break;
-            case R.id.buttonCancelCardAddition:
-                handleExitAdditionScreen();
-
-                //todo showing dialog is better, please show dialog here.
                 break;
             default:
                 break;
@@ -246,18 +237,6 @@ public class AddCardFragment extends Fragment implements View.OnClickListener, V
 
     private String getText(EditText et) {
         return et.getText().toString().trim();
-    }
-
-    @Override
-    public boolean onLongClick(View view) {
-        switch (view.getId()) {
-            case R.id.buttonCancelCardAddition: {
-                //todo : handle going back to the card set screen here
-                getActivity().onBackPressed();
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
